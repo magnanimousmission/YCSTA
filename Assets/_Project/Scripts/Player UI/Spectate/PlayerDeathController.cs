@@ -64,7 +64,14 @@ public class PlayerDeathController : MonoBehaviourPunCallbacks
     
     public void BroadcastDisablePlayerPresence()
     {
+        if (_isDead)
+            return;
+
         DisablePlayerPresence();
+
+        if (!PhotonNetwork.IsConnectedAndReady || !PhotonNetwork.InRoom || PhotonNetwork.LocalPlayer == null)
+            return;
+
         var props = new ExitGames.Client.Photon.Hashtable { { "presenceDisabled", true } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }

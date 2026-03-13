@@ -57,6 +57,7 @@ public class PlayerCore : MonoBehaviour
     private bool rollLock = false;
     float rollCooldown = 3;
     float rollCooldownClock = 0;
+    private bool _oxygenDepletedNotified;
 
 
     internal void SetIsLocal(bool v)
@@ -334,8 +335,14 @@ public class PlayerCore : MonoBehaviour
     
     void Update()
     {
-        if (playerOxygen <= 0)
+        if (playerOxygen <= 0 && !_oxygenDepletedNotified)
+        {
+            _oxygenDepletedNotified = true;
             OnOxygenDepleted?.Invoke();
+        }
+
+        if (playerOxygen > 0)
+            _oxygenDepletedNotified = false;
         //Debug.Log(GetStateMachine().GetCurrentState());
 
 

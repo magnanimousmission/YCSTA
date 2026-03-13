@@ -52,6 +52,9 @@ public class DeathScreenController : MonoBehaviourPunCallbacks
 
     private void ActivateDeathPanel()
     {
+        if (deathPanelActive)
+            return;
+
         deathPanelActive = true;
         deathPanel.SetActive(true);
         UnlockCursor();

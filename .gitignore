@@ -98,7 +98,6 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-/ProjectSettings\PackageManagerSettings.asset
 Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
 Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset
 Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Oswald Bold SDF.asset
@@ -106,6 +105,3 @@ Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Electronic Hig
 Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF.asset
 Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF.asset
 Assets/TerrainDemoScene_URP/Settings/URP/UniversalRenderPipelineGlobalSettings.asset
-ProjectSettings/GraphicsSettings.asset
-ProjectSettings/ProjectSettings.asset
-Assets/_Project/PostProcessing/UniversalRenderPipeline.asset

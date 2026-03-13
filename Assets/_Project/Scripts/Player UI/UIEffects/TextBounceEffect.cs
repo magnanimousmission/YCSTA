@@ -9,7 +9,6 @@ public class TextBounceEffect : MonoBehaviour
     [Header("Pulse Settings")]
     [SerializeField] private float peakScale = 1.2f;
     [SerializeField] private float duration = 0.4f;
-    [SerializeField] private int pulseCount = 3;
     
     private readonly Ease _easeType = Ease.InOutSine;
 

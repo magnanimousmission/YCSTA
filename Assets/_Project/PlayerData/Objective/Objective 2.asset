@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c5b1f7b2c841141bb64c5f34f7884f, type: 3}
+  m_Name: Objective 2
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectiveData
+  mainObjectiveText: Get Access to Computer and download critical file before leaving
+  subObjectives:
+  - displayText: Find key to generator
+    id: pickup_key_01
+  - displayText: turn on generator
+    id: turn_on_generator_01
+  - displayText: download file from computer
+    id: computer_access_01
+  nextObjective: {fileID: 11400000, guid: db791b0f3b238dc4489c07dac16deae1, type: 2}
+  mainDisplayDuration: 4

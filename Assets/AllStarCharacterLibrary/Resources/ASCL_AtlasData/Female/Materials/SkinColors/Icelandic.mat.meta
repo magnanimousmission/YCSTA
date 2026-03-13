@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a42cab649946db146b2a9b9c8c4f0a4f
+timeCreated: 1468586975
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/SkinColors/Icelandic.mat
+  uploadId: 301412

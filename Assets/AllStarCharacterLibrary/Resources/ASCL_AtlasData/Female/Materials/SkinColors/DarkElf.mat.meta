@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f9313fe6d0d80a74780158ff9e9c9445
+timeCreated: 1468587196
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/SkinColors/DarkElf.mat
+  uploadId: 301412

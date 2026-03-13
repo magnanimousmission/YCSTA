@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 53ac8f37631480f40a2b0a6a1c4a4af1
+timeCreated: 1468256623
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/Shield.mat
+  uploadId: 301412

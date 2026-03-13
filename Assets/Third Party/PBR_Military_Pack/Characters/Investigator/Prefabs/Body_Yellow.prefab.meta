@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 10a913098abdc7440862deb172ae94c6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/PBR_Military_Pack/Characters/Investigator/Prefabs/Body_Yellow.prefab
+  uploadId: 354699

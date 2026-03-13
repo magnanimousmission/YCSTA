@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7ad5b17b85059d14f8bcb76776764140
+timeCreated: 1468256624
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/Weapon.mat
+  uploadId: 301412

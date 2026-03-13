@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 208cad3a0725a2b45b20b73c5314b9cf
+timeCreated: 1451420883
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Shaders/Unlit-Alpha.shader
+  uploadId: 301412

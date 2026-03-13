@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 695b3c77cc455334f96de4a52b0a0aa5
+timeCreated: 1468587169
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/SkinColors/Orc.mat
+  uploadId: 301412

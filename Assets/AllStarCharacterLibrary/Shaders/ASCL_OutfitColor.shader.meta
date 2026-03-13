@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b87f55f689ae57a4788cb99fa5c86b7a
+timeCreated: 1468268946
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Shaders/ASCL_OutfitColor.shader
+  uploadId: 301412

@@ -1,0 +1,23 @@
+﻿<Solution>
+<<<<<<< HEAD
+=======
+  <Project Path="Assembly-CSharp.csproj" />
+>>>>>>> skylar-branch
+  <Project Path="PhotonUnityNetworking.Demos.csproj" />
+  <Project Path="PhotonUnityNetworking.Utilities.csproj" />
+  <Project Path="PhotonUnityNetworking.Editor.csproj" />
+  <Project Path="PhotonRealtime.csproj" />
+  <Project Path="PhotonUnityNetworking.csproj" />
+<<<<<<< HEAD
+  <Project Path="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="PunDemos.DemoHubEditor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+=======
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj" />
+  <Project Path="PunDemos.DemoHubEditor.csproj" />
+>>>>>>> skylar-branch
+  <Project Path="PhotonUnityNetworking.Utilities.Culling.Editor.csproj" />
+  <Project Path="PunDemos.DemoSlotcarEditor.csproj" />
+</Solution>

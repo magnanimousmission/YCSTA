@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1624c3a7f2aa6bf449178d456ebb3d86
+timeCreated: 1446470223
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Materials/WhiteDiffuse.mat
+  uploadId: 301412

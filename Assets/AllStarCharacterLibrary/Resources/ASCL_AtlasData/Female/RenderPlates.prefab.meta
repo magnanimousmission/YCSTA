@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 75a1a8adf2f694c41a2aa4baf3cdbd2c
+timeCreated: 1468511633
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/RenderPlates.prefab
+  uploadId: 301412

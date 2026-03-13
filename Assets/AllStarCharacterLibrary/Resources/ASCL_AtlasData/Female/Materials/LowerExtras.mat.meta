@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5ca1554cf9e368046917ebe6c9e55f08
+timeCreated: 1468256623
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/LowerExtras.mat
+  uploadId: 301412

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8eae12a046f7c224ca96b1355a03477c
+timeCreated: 1468587160
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/SkinColors/AsianRed.mat
+  uploadId: 301412

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: acd5672f937c51c45b157f3a200a92d4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/PBR_Military_Pack/Characters/Investigator/Materials/Body_Blue.mat
+  uploadId: 354699

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a96ac9680ac88bf46bf75d65d20572f4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/PBR_Military_Pack/Characters/Investigator/Prefabs/Body_Orange.prefab
+  uploadId: 354699

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3ae1e76092cd19e41a280cd683fdf7ef
+timeCreated: 1468587116
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/SkinColors/Latin.mat
+  uploadId: 301412

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 26ce059c312998d4cab12fc78383a99c
+timeCreated: 1453148505
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/Hair.mat
+  uploadId: 301412

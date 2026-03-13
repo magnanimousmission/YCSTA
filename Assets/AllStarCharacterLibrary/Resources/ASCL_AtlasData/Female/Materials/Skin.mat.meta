@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2a07bec775ae397419640ceaf46a5395
+timeCreated: 1497442083
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/Skin.mat
+  uploadId: 301412

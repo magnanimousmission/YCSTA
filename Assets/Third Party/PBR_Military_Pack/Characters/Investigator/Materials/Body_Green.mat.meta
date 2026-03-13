@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d5801aa39e2d4c54ca6740552464b1e5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/PBR_Military_Pack/Characters/Investigator/Materials/Body_Green.mat
+  uploadId: 354699

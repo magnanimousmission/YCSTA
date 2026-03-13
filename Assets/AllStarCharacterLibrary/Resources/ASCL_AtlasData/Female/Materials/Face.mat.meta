@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d13fbd95bb55aa94fa3ca931dbcba324
+timeCreated: 1468256623
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 43181
+  packageName: All Star Character Collection
+  packageVersion: 5.2
+  assetPath: Assets/AllStarCharacterLibrary/Resources/ASCL_AtlasData/Female/Materials/Face.mat
+  uploadId: 301412

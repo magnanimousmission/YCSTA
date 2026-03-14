@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 69eea5e84da784d48ba1dfc7ddf834e3
+timeCreated: 1504344126
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/PBR_Drone/Effects/Fire/Flame.prefab
+  uploadId: 354699

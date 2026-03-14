@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 4ce567bcbf5711445ae707db1ef81940
+timeCreated: 1578482299
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/Soldier_Marine_2/Materials/Body_2.mat
+  uploadId: 354699

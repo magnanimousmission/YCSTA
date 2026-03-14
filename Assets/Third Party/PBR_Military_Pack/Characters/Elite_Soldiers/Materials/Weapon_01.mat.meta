@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 1a8e3fd6f4812e44db100aa70360fb6e
+timeCreated: 1567192040
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/Elite_Soldiers/Materials/Weapon_01.mat
+  uploadId: 354699

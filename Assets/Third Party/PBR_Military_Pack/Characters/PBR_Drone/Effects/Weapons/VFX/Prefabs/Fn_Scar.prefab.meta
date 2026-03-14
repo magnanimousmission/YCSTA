@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 43ab0ca5d42daf04a99c67697d0e9414
+timeCreated: 1498749623
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/PBR_Drone/Effects/Weapons/VFX/Prefabs/Fn_Scar.prefab
+  uploadId: 354699

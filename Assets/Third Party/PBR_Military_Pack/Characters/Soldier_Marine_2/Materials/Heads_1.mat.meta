@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: b7be5d31e0ca5004e8ee08bb082b8f4f
+timeCreated: 1578482629
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/Soldier_Marine_2/Materials/Heads_1.mat
+  uploadId: 354699

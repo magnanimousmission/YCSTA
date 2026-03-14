@@ -1012,13 +1012,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3887708566333138663}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10491534, y: -0, z: -0, w: 0.9944812}
+  m_LocalRotation: {x: -0.005151826, y: -0, z: -0, w: 0.99998677}
   m_LocalPosition: {x: 0, y: 1.421, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3719745941899445771}
-  m_LocalEulerAnglesHint: {x: 12.045, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.59, y: 0, z: 0}
 --- !u!1 &4156569734718672029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1838,6 +1838,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactor
   playerRoot: {fileID: 5587151068777670355}
+  spreadAngle: 35
+  rayCount: 10
   interactorSource: {fileID: 4345433923883942169}
   interactorRange: 20
 --- !u!114 &7841644147386202184

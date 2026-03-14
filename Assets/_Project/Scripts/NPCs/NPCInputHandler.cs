@@ -9,16 +9,29 @@ public class NPCInputHandler : MonoBehaviour
     [SerializeField] private float followStopDistance = 1.5f;
     
     private NPCInputEventArgs _currentInput = new();
-    private bool _shouldProcessInput  = true;
     private Transform _target;
+    private PhotonView _photonView;
     
     public event Action OnTargetLost;
 
     private void Awake()
     {
-        var photonView = GetComponentInParent<PhotonView>();
-        if (photonView != null)
-            _shouldProcessInput  = photonView.IsMine;
+        _photonView = GetComponentInParent<PhotonView>();
+    }
+
+    private bool HasSimulationAuthority()
+    {
+        if (_photonView == null)
+            return true;
+
+        if (_photonView.IsMine)
+            return true;
+
+        // Scene/room-owned NPCs should be simulated by MasterClient.
+        if (_photonView.IsRoomView)
+            return PhotonNetwork.IsMasterClient;
+
+        return false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,9 +62,9 @@ public class NPCInputHandler : MonoBehaviour
     
     private void Update()
     {
-        if (!_shouldProcessInput)
+        if (!HasSimulationAuthority())
         {
-            ClearInput();
+            ClearMotionInput();
             return;
         }
         
@@ -79,13 +92,18 @@ public class NPCInputHandler : MonoBehaviour
         npcInput?.Invoke(this, _currentInput);
     }
 
-    private void ClearInput()
+    private void ClearMotionInput()
     {
         _currentInput.move = Vector2.zero;
         _currentInput.sprint = false;
         _currentInput.jump = false;
         _currentInput.roll = false;
         _currentInput.oxygen = false;
+    }
+
+    private void ClearInput()
+    {
+        ClearMotionInput();
         _currentInput.target = null;
         npcInput?.Invoke(this, _currentInput);
     }

@@ -5,6 +5,7 @@ using Assets._Project.Scripts.Player.States;
 using Assets.Scripts.Player;
 using Unity.VisualScripting;
 using Assets.Scripts.NPCs;
+using UnityEngine.AI;
 
 public class NPCCore : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class NPCCore : MonoBehaviour
     [SerializeField] private float npcHealth;
     [SerializeField] private float npcEnergy;
     [SerializeField] private float npcOxygen;
-
+    [SerializeField] private NavMeshAgent agent;
     [SerializeField] bool teamMember = false;
 
     internal void SetJumpCooldown(float duration)
@@ -106,6 +107,11 @@ public class NPCCore : MonoBehaviour
         input.npcInput += NPCInputHandler_playerInput;
         Cursor.visible = false;
         initialized = true;
+    }
+
+    internal NavMeshAgent GetAgent()
+    {
+        return agent;
     }
 
     private void OnDestroy()

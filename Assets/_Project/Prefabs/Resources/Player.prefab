@@ -1642,7 +1642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookAtMouse
   mainCamera: {fileID: 4098487107015013012}
-  deadZonePixels: 50
+  deadZonePercent: 8
   minTurnSpeed: 30
   maxTurnSpeed: 180
   rampPower: 1.4

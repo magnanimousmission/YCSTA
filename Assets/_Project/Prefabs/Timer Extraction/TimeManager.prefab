@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30fcc50897179d4489dd2da42f6cacb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimerController
-  timerDuration: 8
+  timerDuration: 480

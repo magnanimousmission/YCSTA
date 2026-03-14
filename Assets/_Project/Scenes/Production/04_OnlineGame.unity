@@ -3847,7 +3847,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 477590795051455743, guid: 202cd40223dce814ca60ee5061eb42a6, type: 3}
       propertyPath: timerDuration
-      value: 20
+      value: 480
       objectReference: {fileID: 0}
     - target: {fileID: 821765074917808789, guid: 202cd40223dce814ca60ee5061eb42a6, type: 3}
       propertyPath: m_Name

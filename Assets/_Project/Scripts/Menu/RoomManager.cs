@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.SceneManagement;
 
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
+    const string kRoomPropGameStarting = "GameStarting";
+    const string kRoomPropGameStartMessage = "GameStartMessage";
+
     [Header("UI References")]
     [SerializeField] RectTransform playerListContent;
     [SerializeField] GameObject playerListEntryPrefab;
@@ -24,6 +28,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     readonly Dictionary<int, GameObject> _playerEntries = new Dictionary<int, GameObject>();
     readonly Dictionary<int, int> _playerColorIndexByActor = new Dictionary<int, int>();
+    bool _hasShownStartLoading;
 
     void Start()
     {
@@ -31,6 +36,31 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         RefreshPlayerList();
         LoadingScreen.Hide();
+
+        if (PhotonNetwork.CurrentRoom != null &&
+            PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(kRoomPropGameStarting, out var startingObj) &&
+            startingObj is bool isStarting &&
+            isStarting)
+        {
+            string message = "Starting game...";
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(kRoomPropGameStartMessage, out var messageObj) &&
+                messageObj is string customMessage &&
+                !string.IsNullOrWhiteSpace(customMessage))
+            {
+                message = customMessage;
+            }
+
+            ShowStartLoading(message);
+        }
+    }
+
+    void ShowStartLoading(string message)
+    {
+        if (_hasShownStartLoading)
+            return;
+
+        _hasShownStartLoading = true;
+        LoadingScreen.Show(message);
     }
 
     void RefreshPlayerList()
@@ -144,9 +174,45 @@ public class RoomManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
+
+            var roomStartProps = new PhotonHashtable
+            {
+                { kRoomPropGameStarting, true },
+                { kRoomPropGameStartMessage, "Starting game..." }
+            };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(roomStartProps);
         }
 
         StartCoroutine(StartGameWithSound());
+    }
+
+    public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged == null)
+            return;
+
+        if (!propertiesThatChanged.TryGetValue(kRoomPropGameStarting, out var startingObj))
+            return;
+
+        if (startingObj is not bool isStarting || !isStarting)
+            return;
+
+        string message = "Starting game...";
+        if (propertiesThatChanged.TryGetValue(kRoomPropGameStartMessage, out var messageObj) &&
+            messageObj is string changedMessage &&
+            !string.IsNullOrWhiteSpace(changedMessage))
+        {
+            message = changedMessage;
+        }
+        else if (PhotonNetwork.CurrentRoom != null &&
+                 PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(kRoomPropGameStartMessage, out var roomMessageObj) &&
+                 roomMessageObj is string roomMessage &&
+                 !string.IsNullOrWhiteSpace(roomMessage))
+        {
+            message = roomMessage;
+        }
+
+        ShowStartLoading(message);
     }
 
     private IEnumerator StartGameWithSound()

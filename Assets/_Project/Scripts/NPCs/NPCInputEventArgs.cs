@@ -7,4 +7,5 @@ public class NPCInputEventArgs
     internal bool jump = false;
     internal bool roll = false;
     public GameObject target = null;
+
 }

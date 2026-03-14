@@ -1,25 +1,41 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class OutlineController : MonoBehaviour
 {
-    [SerializeField]
-    private Outline outline;
+    private Outline[] _outlines;
 
     private void Awake()
     {
-        outline.enabled = false;
+        var found = new List<Outline>();
+        foreach (var t in transform.root.GetComponentsInChildren<Transform>(includeInactive: true))
+        {
+            if (!t.gameObject.activeSelf) continue;
+            if (t.TryGetComponent<Outline>(out var o))
+                found.Add(o);
+        }
+        _outlines = found.ToArray();
+
+        foreach (var outline in _outlines)
+            outline.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("AuraObject")) return;
-        outline.enabled = true;
+        SetOutlines(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("AuraObject")) return;
-        outline.enabled = false;
+        SetOutlines(false);
+    }
+
+    private void SetOutlines(bool state)
+    {
+        foreach (var outline in _outlines)
+            outline.enabled = state;
     }
 }

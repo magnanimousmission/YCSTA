@@ -53,11 +53,13 @@ namespace Assets.Scripts.NPCs
             if (direction.sqrMagnitude > 0.001f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
-                npc.transform.rotation = Quaternion.Slerp(
-                    npc.transform.rotation,
+                Quaternion smoothed = Quaternion.Slerp(
+                    npc.GetRB().rotation,
                     targetRotation,
-                    Time.deltaTime * npc.GetNPCData().rotationSpeed
+                    Time.fixedDeltaTime * npc.GetNPCData().rotationSpeed
                 );
+
+                npc.GetRB().MoveRotation(smoothed);
             }
         }
     }

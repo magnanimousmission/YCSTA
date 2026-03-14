@@ -17,7 +17,15 @@ public class LookAtMouse : MonoBehaviour
     private Transform _tr;
     private PhotonView _photonView;
     private bool _ready;
+    private bool _isPauseMenuOpen;
     private Quaternion _desiredRotation;
+
+    private static void SetGameplayCursorState()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+    }
+
     private void Awake()
     {
         _tr = transform;
@@ -34,10 +42,37 @@ public class LookAtMouse : MonoBehaviour
         _rb.freezeRotation = true;
         _desiredRotation = _tr.rotation;
         _ready = true;
+
+        SetGameplayCursorState();
     }
+
+    private void OnEnable()
+    {
+        PauseMenuController.OnPauseToggled += HandlePauseToggled;
+    }
+
+    private void OnDisable()
+    {
+        PauseMenuController.OnPauseToggled -= HandlePauseToggled;
+    }
+
+    private void HandlePauseToggled(bool isPaused)
+    {
+        _isPauseMenuOpen = isPaused;
+
+        if (!isPaused)
+            SetGameplayCursorState();
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus && !_isPauseMenuOpen)
+            SetGameplayCursorState();
+    }
+
     private void LateUpdate()
     {
-        if (!_ready || Mouse.current == null || mainCamera == null) return;
+        if (!_ready || _isPauseMenuOpen || !Application.isFocused || Mouse.current == null || mainCamera == null) return;
         float mouseX = Mouse.current.position.ReadValue().x;
         float screenCenter = Screen.width * 0.5f;
         float distFromCenter = mouseX - screenCenter;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
@@ -21,18 +22,22 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
 
     [Header("Player References")]
     public List<GameObject> Players = new();
-    
+
     private Transform _localAnchor;
+    private Transform _localPlayer;
 
-    private Transform   _localPlayer;
-    private Transform[] _survivors;
+    private struct TetherEdge
+    {
+        public Transform From;
+        public Transform To;
+    }
 
+    private TetherEdge[] _edges= Array.Empty<TetherEdge>();
     private LineRenderer[] _coreWires;
     private LineRenderer[] _innerGlows;
     private LineRenderer[] _outerHalos;
 
-    private AuraController   _localAura;
-    private AuraController[] _survivorAuras;
+    private AuraController _localAura;
 
     private bool _tetherVisible = true;
     
@@ -51,77 +56,53 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
         }
 
         bool playersChanged = RefreshPlayersFromPhoton();
-        if (playersChanged || _coreWires == null || _coreWires.Length != _survivors.Length)
+        var currentEdges = BuildEdges();
+        
+        if (playersChanged || currentEdges.Count != _edges.Length)
         {
+            _edges = currentEdges.ToArray();
             RebuildTethers();
             _localAura = null;
         }
 
         CacheLocalAura();
 
-        if (_localPlayer == null || _survivors == null || _coreWires == null)
+        if (_coreWires == null || _coreWires.Length == 0)
             return;
 
-        for (int i = 0; i < _survivors.Length; i++)
+        if (_localPlayer == null || _coreWires == null)
+            return;
+
+        for (int i = 0; i < _edges.Length; i++)
         {
-            if (_survivors[i] == null) continue;
+            Debug.Log($"Edge {i}: From={_edges[i].From?.position} To={_edges[i].To?.position}");
 
-            bool isPeer = _localAura != null
-                       && _survivorAuras != null
-                       && _survivorAuras[i] != null
-                       && _localAura.HasPeer(_survivorAuras[i]);
+            var edge = _edges[i];
+            if (edge.From == null || edge.To == null) continue;
 
-            SetTetherLayerActive(i, isPeer && _tetherVisible);
-            if (!isPeer) continue;
+            SetTetherLayerActive(i, _tetherVisible);
+            if (!_tetherVisible) continue;
 
-            Vector3 start = GetTetherAnchor(_localPlayer, isLocal: true);
-            Vector3 end   = GetTetherAnchor(_survivors[i]);
+            Vector3 start = GetTetherAnchor(edge.From, edge.From == _localPlayer);
+            Vector3 end   = GetTetherAnchor(edge.To,   edge.To   == _localPlayer);
 
             UpdateTetherPositions(_coreWires[i],  start, end);
             UpdateTetherPositions(_innerGlows[i], start, end);
             UpdateTetherPositions(_outerHalos[i], start, end);
-            
-            float  auraRatio   = _localAura.CurrentAura / 100f;
-            Color  tetherColor = Color.Lerp(Color.red, Color.white, auraRatio);
+
+            float auraRatio   = _localAura != null ? _localAura.CurrentAura / 100f : 1f;
+            Color tetherColor = Color.Lerp(Color.red, Color.white, auraRatio);
 
             ApplyColor(_coreWires[i],  tetherColor);
             ApplyColor(_innerGlows[i], tetherColor);
             ApplyColor(_outerHalos[i], tetherColor);
-            
+
             float widthPulse = 1f + 0.15f * Mathf.Sin(Time.time * 3f);
             _coreWires[i].startWidth = CoreWidth * widthPulse;
             _coreWires[i].endWidth   = CoreWidth * widthPulse;
         }
     }
     
-    private Vector3 GetTetherAnchor(Transform t, bool isLocal = false)
-    {
-        if (isLocal && _localAnchor != null) return _localAnchor.position;
-        if (t == null) return Vector3.zero;
-        return t.position + Vector3.up * 1.0f;
-    }
-    
-    private void CacheLocalAura()
-    {
-        if (_localPlayer == null) return;
-    
-        if (_localAura == null)
-            _localAura = _localPlayer.GetComponentInChildren<AuraController>();
-
-        if (_localAnchor == null)
-        {
-            foreach (Transform child in _localPlayer.GetComponentsInChildren<Transform>())
-            {
-                if (child.CompareTag("TetherAnchor"))
-                {
-                    _localAnchor = child;
-                    break;
-                }
-            }
-        }
-    }
-    
-
     public override void OnJoinedRoom()
     {
         RefreshPlayersFromPhoton();
@@ -139,19 +120,17 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
         RefreshPlayersFromPhoton();
         RebuildTethers();
     }
-
+    
     private bool RefreshPlayersFromPhoton()
     {
         if (!PhotonNetwork.InRoom)
             return false;
 
-        int       previousPlayerCount   = Players.Count;
-        Transform previousLocalPlayer   = _localPlayer;
-        int       previousSurvivorCount = _survivors != null ? _survivors.Length : 0;
+        int       previousPlayerCount = Players.Count;
+        Transform previousLocalPlayer = _localPlayer;
 
         Players.Clear();
         _localPlayer = null;
-        List<Transform> remotePlayers = new();
 
         var playerViews = FindObjectsByType<PhotonView>(
             FindObjectsInactive.Exclude, FindObjectsSortMode.None);
@@ -166,54 +145,96 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
                 continue;
 
             var root = view.transform.root.gameObject;
-            if (Players.Contains(root)) continue;
+            Players.Add(root);
 
             Players.Add(root);
 
             if (view.IsMine)
                 _localPlayer = view.transform;
-            else
-                remotePlayers.Add(view.transform);
         }
 
-        _survivors = remotePlayers.ToArray();
+        return Players.Count != previousPlayerCount
+            || _localPlayer  != previousLocalPlayer;
+    }
 
-        return Players.Count          != previousPlayerCount
-            || _localPlayer           != previousLocalPlayer
-            || _survivors.Length      != previousSurvivorCount;
+    private void CacheLocalAura()
+    {
+        if (_localPlayer == null) return;
+
+        if (_localAura == null)
+            _localAura = _localPlayer.GetComponentInChildren<AuraController>();
+
+        if (_localAnchor == null)
+        {
+            foreach (Transform child in _localPlayer.GetComponentsInChildren<Transform>())
+            {
+                if (child.CompareTag("TetherAnchor"))
+                {
+                    _localAnchor = child;
+                    break;
+                }
+            }
+        }
+    }
+
+    private List<TetherEdge> BuildEdges()
+    {
+        var edges = new List<TetherEdge>();
+
+        var auraToTransform = new Dictionary<AuraController, Transform>();
+        foreach (var go in Players)
+        {
+            if (go == null) continue;
+            var aura = go.GetComponentInChildren<AuraController>();
+        
+            var view = go.GetComponentInChildren<PhotonView>() //TODO: figure out specific routing
+                       ?? go.GetComponentInParent<PhotonView>();
+            if (aura != null && view != null)
+                auraToTransform[aura] = view.transform;
+        }
+
+        foreach (var (auraA, transformA) in auraToTransform)
+        {
+            foreach (var auraB in auraA.GetPeers())
+            {
+                if (!auraToTransform.TryGetValue(auraB, out Transform transformB))
+                    continue;
+
+                if (auraA.GetInstanceID() < auraB.GetInstanceID())
+                    edges.Add(new TetherEdge { From = transformA, To = transformB });
+            }
+        }
+
+        return edges;
     }
     
     private void RebuildTethers()
     {
         DestroyAllLayers();
 
-        int count = _survivors != null ? _survivors.Length : 0;
+        int count = _edges != null ? _edges.Length : 0;
 
-        _coreWires     = new LineRenderer[count];
-        _innerGlows    = new LineRenderer[count];
-        _outerHalos    = new LineRenderer[count];
-        _survivorAuras = new AuraController[count];
+        _coreWires  = new LineRenderer[count];
+        _innerGlows = new LineRenderer[count];
+        _outerHalos = new LineRenderer[count];
 
         for (int i = 0; i < count; i++)
         {
             _coreWires[i]  = SpawnLayer(CorePrefab, CoreWidth);
             _innerGlows[i] = SpawnLayer(GlowPrefab, GlowWidth);
             _outerHalos[i] = SpawnLayer(HaloPrefab, HaloWidth);
-
-            if (_survivors[i] != null)
-                _survivorAuras[i] = _survivors[i].GetComponentInChildren<AuraController>()
-                                 ?? _survivors[i].GetComponentInParent<AuraController>();
         }
     }
+
 
     private LineRenderer SpawnLayer(LineRenderer prefab, float width)
     {
         if (prefab == null) return null;
-        LineRenderer lr   = Instantiate(prefab, transform);
-        lr.positionCount  = PointsPerTether;
-        lr.useWorldSpace  = true;
-        lr.startWidth     = width;
-        lr.endWidth       = width;
+        LineRenderer lr  = Instantiate(prefab, transform);
+        lr.positionCount = PointsPerTether;
+        lr.useWorldSpace = true;
+        lr.startWidth    = width;
+        lr.endWidth      = width;
         return lr;
     }
 
@@ -231,13 +252,20 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
             if (lr != null) Destroy(lr.gameObject);
     }
     
+    private Vector3 GetTetherAnchor(Transform t, bool isLocal = false)
+    {
+        if (isLocal && _localAnchor != null) return _localAnchor.position;
+        if (t == null) return Vector3.zero;
+        return t.position + Vector3.up * 1.0f;
+    }
+
     private void UpdateTetherPositions(LineRenderer lr, Vector3 start, Vector3 end)
     {
         if (lr == null) return;
         for (int p = 0; p < PointsPerTether; p++)
         {
-            float   t           = p / (float)(PointsPerTether - 1);
-            Vector3 pos         = Vector3.Lerp(start, end, t);
+            float   t             = p / (float)(PointsPerTether - 1);
+            Vector3 pos           = Vector3.Lerp(start, end, t);
             Vector3 perpendicular = Vector3.Cross((end - start).normalized, Vector3.up);
             pos += perpendicular * Mathf.Sin(Time.time * WaveSpeed + t * Mathf.PI * 2f) * WaveAmplitude;
             lr.SetPosition(p, pos);

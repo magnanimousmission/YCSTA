@@ -296,6 +296,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: InteractionCollider
       objectReference: {fileID: 0}
+    - target: {fileID: 6575400684598348925, guid: 94d8a5d6363e93f47aef67e21757f8ae, type: 3}
+      propertyPath: m_text
+      value: '[E] to add to tether'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575400684598348925, guid: 94d8a5d6363e93f47aef67e21757f8ae, type: 3}
+      propertyPath: m_fontSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575400684598348925, guid: 94d8a5d6363e93f47aef67e21757f8ae, type: 3}
+      propertyPath: m_fontStyle
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575400684598348925, guid: 94d8a5d6363e93f47aef67e21757f8ae, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

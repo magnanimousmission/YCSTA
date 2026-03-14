@@ -3,30 +3,28 @@ using TMPro;
 
 public class TimerUIController : MonoBehaviour
 { 
-    private TimerController _timerController;
     private TextMeshProUGUI _timerText;
 
     private void Awake()
     {
-        _timerController = GetComponent<TimerController>();
         _timerText = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnEnable()
     {
-        _timerController.OnTimerTick += HandleTimerTick;
-        _timerController.OnTimerFinished += HandleTimerFinished;
+        TimerController.OnTimerTick += HandleTimerTick;
+        TimerController.OnTimerFinished += HandleTimerFinished;
     }
 
     private void OnDisable()
     {
-        _timerController.OnTimerTick -= HandleTimerTick;
-        _timerController.OnTimerFinished -= HandleTimerFinished;
+        TimerController.OnTimerTick -= HandleTimerTick;
+        TimerController.OnTimerFinished -= HandleTimerFinished;
     }
 
     private void HandleTimerTick(float normalizedTime)
     {
-        var seconds = _timerController.CurrentTime;
+        var seconds = TimerController.Instance.CurrentTime;
         _timerText.text = FormatTime(seconds);
     }
 

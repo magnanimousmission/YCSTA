@@ -98,6 +98,7 @@ public class PlayerCore : MonoBehaviour
         FindFirstObjectByType<EnergyUIController>()?.Bind(this);
         FindFirstObjectByType<OxygenUIController>()?.Bind(this);
         FindFirstObjectByType<DeathScreenController>(FindObjectsInactive.Include)?.Bind(this);
+        FindFirstObjectByType<ExtractionController>(FindObjectsInactive.Include)?.Bind(this);
     }
 
     internal bool GetIsLocal()

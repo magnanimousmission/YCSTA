@@ -738,7 +738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &478511218
 Transform:
   m_ObjectHideFlags: 0
@@ -769,7 +769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85d3a043003c31e4e969b61e3adc246d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.91238
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85d3a043003c31e4e969b61e3adc246d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1256,7 +1256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85d3a043003c31e4e969b61e3adc246d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.91238
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85d3a043003c31e4e969b61e3adc246d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1518,7 +1518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85d3a043003c31e4e969b61e3adc246d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.91238
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85d3a043003c31e4e969b61e3adc246d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1584,7 +1584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85d3a043003c31e4e969b61e3adc246d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.91238
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85d3a043003c31e4e969b61e3adc246d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2130,7 +2130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85d3a043003c31e4e969b61e3adc246d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.91238
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85d3a043003c31e4e969b61e3adc246d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4005,6 +4005,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 4445647727648656277, guid: c04fd4c5f43cea143a7a8da526237196, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 232d454b5011cdf40a70719bac9c028d, type: 2}
     - target: {fileID: 7258150499314745073, guid: c04fd4c5f43cea143a7a8da526237196, type: 3}
       propertyPath: m_Name
       value: GuardStation (2)

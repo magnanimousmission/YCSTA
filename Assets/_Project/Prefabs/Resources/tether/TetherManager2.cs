@@ -41,6 +41,9 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
 
     private bool _tetherVisible = true;
     
+    private Dictionary<Transform, Transform> _anchorCache = new();
+
+    
     private void Start()
     {
         RefreshPlayersFromPhoton();
@@ -75,7 +78,7 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < _edges.Length; i++)
         {
-            Debug.Log($"Edge {i}: From={_edges[i].From?.position} To={_edges[i].To?.position}");
+            //Debug.Log($"Edge {i}: From={_edges[i].From?.position} To={_edges[i].To?.position}");
 
             var edge = _edges[i];
             if (edge.From == null || edge.To == null) continue;
@@ -145,7 +148,7 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
                 continue;
 
             var root = view.transform.root.gameObject;
-            Players.Add(root);
+            if (Players.Contains(root)) continue;
 
             Players.Add(root);
 
@@ -154,7 +157,7 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
         }
 
         return Players.Count != previousPlayerCount
-            || _localPlayer  != previousLocalPlayer;
+               || _localPlayer  != previousLocalPlayer;
     }
 
     private void CacheLocalAura()
@@ -180,19 +183,29 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
     private List<TetherEdge> BuildEdges()
     {
         var edges = new List<TetherEdge>();
-
+        
         var auraToTransform = new Dictionary<AuraController, Transform>();
+        
         foreach (var go in Players)
         {
             if (go == null) continue;
             var aura = go.GetComponentInChildren<AuraController>();
-        
-            var view = go.GetComponentInChildren<PhotonView>() //TODO: figure out specific routing
+            var view = go.GetComponentInChildren<PhotonView>()
                        ?? go.GetComponentInParent<PhotonView>();
             if (aura != null && view != null)
                 auraToTransform[aura] = view.transform;
         }
+        
+        var allAuras = FindObjectsByType<AuraController>(
+            FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 
+        foreach (var aura in allAuras)
+        {
+            if (aura.OwnerType != AuraOwnerType.Npc) continue;
+            if (!auraToTransform.ContainsKey(aura))
+                auraToTransform[aura] = aura.transform;
+        }
+        
         foreach (var (auraA, transformA) in auraToTransform)
         {
             foreach (var auraB in auraA.GetPeers())
@@ -211,6 +224,7 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
     private void RebuildTethers()
     {
         DestroyAllLayers();
+        _anchorCache.Clear();
 
         int count = _edges != null ? _edges.Length : 0;
 
@@ -254,11 +268,13 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
     
     private Vector3 GetTetherAnchor(Transform t, bool isLocal = false)
     {
-        if (isLocal && _localAnchor != null) return _localAnchor.position;
         if (t == null) return Vector3.zero;
-        return t.position + Vector3.up * 1.0f;
+        Transform anchor = GetAnchorTransform(t);
+        if (anchor == t)
+            return t.position + Vector3.up * 1.0f;
+        return anchor.position;
     }
-
+    
     private void UpdateTetherPositions(LineRenderer lr, Vector3 start, Vector3 end)
     {
         if (lr == null) return;
@@ -270,6 +286,24 @@ public class TetherManager2 : MonoBehaviourPunCallbacks
             pos += perpendicular * Mathf.Sin(Time.time * WaveSpeed + t * Mathf.PI * 2f) * WaveAmplitude;
             lr.SetPosition(p, pos);
         }
+    }
+    
+    private Transform GetAnchorTransform(Transform root)
+    {
+        if (_anchorCache.TryGetValue(root, out Transform cached))
+            return cached;
+
+        foreach (Transform child in root.GetComponentsInChildren<Transform>())
+        {
+            if (child.CompareTag("TetherAnchor"))
+            {
+                _anchorCache[root] = child;
+                return child;
+            }
+        }
+        
+        _anchorCache[root] = root;
+        return root;
     }
 
     private void ApplyColor(LineRenderer lr, Color color)

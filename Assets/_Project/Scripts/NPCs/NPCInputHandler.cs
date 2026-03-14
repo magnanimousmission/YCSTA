@@ -9,55 +9,62 @@ public class NPCInputHandler : MonoBehaviour
     [SerializeField] private float followStopDistance = 1.5f;
     
     private NPCInputEventArgs _currentInput = new();
-    private bool shouldProcessInput = true;
-    Transform target;
+    private bool _shouldProcessInput  = true;
+    private Transform _target;
+    
+    public event Action OnTargetLost;
 
     private void Awake()
     {
         var photonView = GetComponentInParent<PhotonView>();
         if (photonView != null)
-            shouldProcessInput = photonView.IsMine;
+            _shouldProcessInput  = photonView.IsMine;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log(target);
-            target = other.transform;
-            _currentInput.target = other.gameObject;
-        }
+        // if (other.CompareTag("Player"))
+        // {
+        //     Debug.Log(_target);
+        //     _target = other.transform;
+        //     _currentInput.target = other.gameObject;
+        // }
     }
-
+    
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && other.transform == _target)
         {
-            target = null;
-            _currentInput.target = null;
+            _target = null;
             ClearInput();
+            OnTargetLost?.Invoke();
         }
     }
 
+    public void SetTarget(GameObject target)
+    {
+        _target = target != null ? target.transform : null;
+        _currentInput.target = target;
+    }
+    
     private void Update()
     {
-        if (!shouldProcessInput )
+        if (!_shouldProcessInput)
         {
             ClearInput();
             return;
         }
-
-        if (target == null)
+        
+        if (_target == null)
             return;
-        Vector3 toPlayer = target.position - transform.position;
+        
+        Vector3 toPlayer = _target.position - transform.position;
         float distance = toPlayer.magnitude;
 
         if (distance > followStopDistance)
         {
-            // Convert world direction to local 2D movement input
             Vector3 localDir = transform.InverseTransformDirection(toPlayer.normalized);
             _currentInput.move = new Vector2(localDir.x, localDir.z);
-
         }
         else
         {

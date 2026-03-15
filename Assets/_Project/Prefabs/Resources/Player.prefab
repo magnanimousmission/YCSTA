@@ -393,11 +393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec195a5eab09cf0478914eb0a49b2fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactor
-  playerRoot: {fileID: 1718840798161389148}
-  spreadAngle: 35
-  rayCount: 10
-  interactorSource: {fileID: 4246994465394982424}
-  interactorRange: 20
+  myCollider: {fileID: 6594561986987393202}
+  player: {fileID: 5190147562375330180}
 --- !u!65 &6594561986987393202
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2409,7 +2406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputHandler
   sprint: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  oxygen: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  interact: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   jump: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   roll: {fileID: 2263939470987874244, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!114 &6942612049882811837

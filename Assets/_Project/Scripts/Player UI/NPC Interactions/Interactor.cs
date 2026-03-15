@@ -31,14 +31,14 @@ public class Interactor : MonoBehaviour
 
         if (interactObj != null)
         {
-            Debug.Log("IInt found");
+            //Debug.Log("IInt found");
             interactObj.IsLookingAt = true;
             interactObj.RotateUI(player.GetComponentInParent<Animator>().gameObject.transform);
 
         }
         else
         {
-            Debug.Log("IInt not found");
+            //Debug.Log("IInt not found");
 
         }
 
@@ -50,7 +50,7 @@ public class Interactor : MonoBehaviour
     {
         if (!myCollider.bounds.Contains(other.transform.position)) return;
 
-        Debug.Log(other.gameObject.transform.tag);
+        //Debug.Log(other.gameObject.transform.tag);
         if(!other.gameObject.CompareTag("Terrain"))
             TryInteract(other.gameObject);
     }

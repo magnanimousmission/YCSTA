@@ -18,6 +18,7 @@ public class InitialState : MonoBehaviour
 
     void Start()
     {
+        animator.SetBool("Idle", false);
         animator.SetBool(parameterToActivateFirst, true);
 
     }
@@ -31,7 +32,9 @@ public class InitialState : MonoBehaviour
     {
         if (triggerActivated) return;
         if (!myCollider.bounds.Contains(other.transform.position)) return;
-        if (triggerColliderActivatedAnime && other.gameObject.CompareTag("Player"))
+        if(other.gameObject.GetComponentInParent<Animator>() == null) return;
+
+        if (triggerColliderActivatedAnime && other.gameObject.GetComponentInParent<Animator>().gameObject.CompareTag("Player"))
         {
             animator.SetBool(parameterToActivateFirst, false);
             animator.SetBool(triggerActivatedParameter, true);

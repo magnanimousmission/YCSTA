@@ -3,7 +3,17 @@ guid: eec2b188006f86549aae800b19870676
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mint
+    second: {fileID: 2100000, guid: b88df111ce8c49147a93ca79536e442c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White
+    second: {fileID: 2100000, guid: d960b248f19fb124c82d3ca78f76bcc9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

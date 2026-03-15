@@ -3,7 +3,42 @@ guid: 83105cce57a3d404d9972971225a05ea
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blind
+    second: {fileID: -8418019662413110148, guid: 920d9ebbe98a6ec4d9c9afa4731e2091, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: chimney
+    second: {fileID: 2100000, guid: c1560d03dd52de848b5b5c60b0d51530, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: foundation
+    second: {fileID: 4404839247605695133, guid: 8432f5a2d4560624688decb9c03c2fb0, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plank_wall
+    second: {fileID: 2100000, guid: c1560d03dd52de848b5b5c60b0d51530, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: roof
+    second: {fileID: 2100000, guid: ff8c2e7056730cf4794ccac044e11f70, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wall
+    second: {fileID: 2100000, guid: c1560d03dd52de848b5b5c60b0d51530, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: window
+    second: {fileID: 2100000, guid: 232d454b5011cdf40a70719bac9c028d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -14,10 +14,10 @@ public abstract class BaseInteractable : MonoBehaviour, IInteractable
     
     protected virtual void Update()
     {
-        if (_hasInteracted) return;
-        
-        if (interactUI != null)
-            interactUI.SetActive(IsLookingAt);
+        // if (_hasInteracted) return;
+        //
+        // if (interactUI != null)
+        //     interactUI.SetActive(IsLookingAt);
     }
 
     public virtual void RotateUI(Transform playerTransform)

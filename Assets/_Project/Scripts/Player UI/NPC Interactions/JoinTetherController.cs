@@ -23,7 +23,7 @@ public class JoinTetherController : BaseInteractable
         _hasInteracted = true;
 
         gameObject.GetComponentInParent<Animator>().SetBool("talking", true);
-        gameObject.GetComponentInParent<InitialState>().RemoveParameters();
+        //gameObject.GetComponentInParent<InitialState>().RemoveParameters(); TODO: make sure this works
 
         var otherAura = interactorSource.GetComponentInChildren<AuraController>();
         if (otherAura == null || otherAura == ownerAuraController)

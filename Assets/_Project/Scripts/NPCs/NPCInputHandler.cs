@@ -78,7 +78,7 @@ public class NPCInputHandler : MonoBehaviour
 
         _currentInput.jump = false;
         _currentInput.roll = false;
-        _currentInput.oxygen = false;
+        _currentInput.interacting = false;
         npcInput?.Invoke(this, _currentInput);
     }
 
@@ -88,7 +88,7 @@ public class NPCInputHandler : MonoBehaviour
         _currentInput.sprint = false;
         _currentInput.jump = false;
         _currentInput.roll = false;
-        _currentInput.oxygen = false;
+        _currentInput.interacting = false;
         _currentInput.target = null;
         npcInput?.Invoke(this, _currentInput);
     }

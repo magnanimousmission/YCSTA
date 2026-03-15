@@ -183,7 +183,7 @@ public class NPCCore : MonoBehaviour
             NPCInput.roll = false;
         }
 
-        if (NPCInput.oxygen)
+        if (NPCInput.interacting)
         {
             if (stateMachine.currentState != interacting)
                 stateMachine.currentState.Exit(this);
@@ -342,7 +342,7 @@ public class NPCCore : MonoBehaviour
 
         DrainPlayerOxygen(npcOxygen - (npcData.oxygenPassiveDrainRate * Time.deltaTime));
 
-        if (refillingOxygen && npcInput != null && !npcInput.oxygen)
+        if (refillingOxygen && npcInput != null && !npcInput.interacting)
         {
             refillingOxygen = false;
             stateMachine.GetCurrentState().Exit(this);

@@ -22,7 +22,11 @@ public class JoinTetherController : BaseInteractable
         _hasInteracted = true;
         
         var otherAura = interactorSource.GetComponentInChildren<AuraController>();
-        if (otherAura == null || otherAura == ownerAuraController) return;
+        if (otherAura == null || otherAura == ownerAuraController)
+        {
+            gameObject.GetComponentInParent<Animator>().SetBool("talking", false);
+            return;
+        }
 
         ownerAuraController.AddPeer(otherAura);
         otherAura.AddPeer(ownerAuraController);
@@ -30,6 +34,7 @@ public class JoinTetherController : BaseInteractable
         
         npcInputHandler.SetTarget(interactorSource);
         InteractUI.SetActive(false);
+        gameObject.GetComponentInParent<Animator>().SetBool("talking", false);
     }
     
     private void OnNPCTargetLost()

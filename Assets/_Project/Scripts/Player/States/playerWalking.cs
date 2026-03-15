@@ -8,8 +8,6 @@ namespace Assets.Scripts.Player
 
         public void Enter(PlayerCore player)
         {
-
-
             if (player.GetPlayerInput().move.x < 0)
             {
                 player.GetAnimator().SetBool("WalkingStrafeLeft", true);

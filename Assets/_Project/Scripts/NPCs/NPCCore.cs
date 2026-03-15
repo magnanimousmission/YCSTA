@@ -103,6 +103,10 @@ public class NPCCore : MonoBehaviour
         npcEnergy = npcData.energy;
         npcInput = new NPCInputEventArgs();
         input.npcInput += NPCInputHandler_playerInput;
+
+        if (agent != null)
+            agent.updateRotation = false;
+
         Cursor.visible = false;
         initialized = true;
     }

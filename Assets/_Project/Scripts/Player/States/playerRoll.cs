@@ -24,6 +24,8 @@ namespace Assets._Project.Scripts.Player.States
             //Debug.Log(duration);
             player.SetRollingCooldown(duration);
 
+            if (player.GetIsLocal())
+                AudioManager.Instance?.PlaySfx(AudioManager.SfxClip.PlayerRollSound);
 
         }
 

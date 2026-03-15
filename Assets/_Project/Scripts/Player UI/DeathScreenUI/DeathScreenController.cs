@@ -15,6 +15,7 @@ public class DeathScreenController : MonoBehaviourPunCallbacks
     private PlayerCore _playerCore;
     private AuraDeathTimer _auraDeathTimer;
     private PlayerDeathController _playerDeathController;
+    private ExtractionController _extractionController;
     private CursorLockMode _previousLockMode;
     private bool _previousCursorVisible;
     private bool _isReturningToMainMenu;
@@ -50,7 +51,7 @@ public class DeathScreenController : MonoBehaviourPunCallbacks
             _playerDeathController.OnNoPlayersLeftToSpectate -= QuitButtonClicked;
     }
 
-    private void ActivateDeathPanel()
+    public void ActivateDeathPanel()
     {
         if (deathPanelActive)
             return;
@@ -137,6 +138,8 @@ public class DeathScreenController : MonoBehaviourPunCallbacks
     {
         if (!_isReturningToMainMenu)
             return;
+
+        AudioManager.Instance?.PlaySfx(AudioManager.SfxClip.PlayerLeaveRoomSound);
 
         if (PhotonNetwork.IsConnected)
         {

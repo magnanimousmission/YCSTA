@@ -65,7 +65,7 @@ namespace Assets.Scripts.NPCs
                 Quaternion smoothed = Quaternion.Slerp(
                     npc.GetRB().rotation,
                     targetRotation,
-                    Time.deltaTime * npc.GetNPCData().rotationSpeed
+                    Time.fixedDeltaTime * npc.GetNPCData().rotationSpeed
                 );
                 npc.GetRB().MoveRotation(smoothed);
             }

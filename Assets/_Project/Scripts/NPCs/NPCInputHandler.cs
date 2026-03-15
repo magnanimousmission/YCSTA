@@ -105,7 +105,6 @@ public class NPCInputHandler : MonoBehaviour
         _currentInput.jump = false;
         _currentInput.roll = false;
         _currentInput.interacting = false;
-        _currentInput.oxygen = false;
     }
 
     private void ClearInput()

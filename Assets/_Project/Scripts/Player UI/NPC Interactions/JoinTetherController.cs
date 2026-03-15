@@ -103,7 +103,7 @@ public class JoinTetherController : BaseInteractable, IOnEventCallback
 
         InteractUI.SetActive(false);
 
-        player = interactorSource.GetComponentInChildren<PlayerCore>();
+        PlayerCore player  = interactorSource.GetComponentInChildren<PlayerCore>();
         InitialState isController = gameObject.GetComponentInParent<InitialState>();
         isController.RemoveParameters();
         NPCCore npc = isController.gameObject.GetComponentInChildren<NPCCore>();

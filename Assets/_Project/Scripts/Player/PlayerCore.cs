@@ -439,19 +439,21 @@ public class PlayerCore : MonoBehaviour
             return true;
         else
             return false;
+
+    }
     private void HandleFootstepAudio()
     {
         if (!isLocalPlayer || AudioManager.Instance == null)
             return;
 
-    }
+    
     
         Vector2 moveInput = input != null ? input.MoveDirection : Vector2.zero;
         bool hasInput = moveInput.sqrMagnitude > 0.0001f;
         bool isRunningByInput = playerInput != null && playerInput.sprint && playerEnergy > 0f;
-        bool blockedByState = stateMachine != null && (stateMachine.currentState == dead || stateMachine.currentState == fallen || stateMachine.currentState == oxygen);
+        bool blockedByState = stateMachine != null && (stateMachine.currentState == dead || stateMachine.currentState == fallen);
 
-        if (!hasInput || rolling || GetIsJumping() || blockedByState)
+        if (!hasInput || GetIsRolling() || GetIsJumping() || blockedByState)
         {
             _footstepTimer = 0f;
             return;

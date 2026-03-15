@@ -2373,6 +2373,8 @@ MonoBehaviour:
   playerHealth: 100
   playerEnergy: 100
   playerOxygen: 100
+  walkingSoundInterval: 0.45
+  runningSoundInterval: 0.3
 --- !u!114 &928389835547598536
 MonoBehaviour:
   m_ObjectHideFlags: 0

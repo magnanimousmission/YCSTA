@@ -139,6 +139,8 @@ public class DeathScreenController : MonoBehaviourPunCallbacks
         if (!_isReturningToMainMenu)
             return;
 
+        AudioManager.Instance?.PlaySfx(AudioManager.SfxClip.PlayerLeaveRoomSound);
+
         if (PhotonNetwork.IsConnected)
         {
             LoadingScreen.Show("Disconnecting...");

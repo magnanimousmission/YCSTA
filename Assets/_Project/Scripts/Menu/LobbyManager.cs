@@ -219,6 +219,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        AudioManager.Instance?.PlaySfx(AudioManager.SfxClip.PlayerLeaveRoomSound);
         if (_hasPendingCreateRoom)
             PhotonNetwork.JoinLobby();
     }

@@ -46,13 +46,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   musicSource: {fileID: 0}
   sfxSource: {fileID: 0}
+  loopingSfxSource: {fileID: 0}
+  ambientSource: {fileID: 0}
   ambienceClips:
   - {fileID: 8300000, guid: 366b1fe547b294e479cbd28bf5ace643, type: 3}
   - {fileID: 8300000, guid: 62bcc45419279e84cbed92f41b54e098, type: 3}
   - {fileID: 8300000, guid: 7b2b5334009e1064abfc140eb4e0927c, type: 3}
+  soundClips:
+  - {fileID: 8300000, guid: 545b2f7d67b6bd34e8eb70d082064962, type: 3}
+  - {fileID: 8300000, guid: fb111ce3aa726964aaa45df1c3d29250, type: 3}
+  - {fileID: 8300000, guid: 482f0af7fd649aa4da7de030f6a6776e, type: 3}
+  - {fileID: 8300000, guid: 77fa82326144847419d16707a0629cf6, type: 3}
+  - {fileID: 8300000, guid: 2d7645ebd4e1b064bb97e40fa2e40cd0, type: 3}
+  - {fileID: 8300000, guid: bec9964efd5f2994a8992fce2dd2d4d1, type: 3}
+  - {fileID: 8300000, guid: 5b8d67e9bb3bcd247b2c13be3f2e9c6c, type: 3}
+  - {fileID: 8300000, guid: 01d835513bfd93e47b90fa1901813926, type: 3}
+  - {fileID: 8300000, guid: 2d7645ebd4e1b064bb97e40fa2e40cd0, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: 3353a1f10adff444fb018dd61b434dd8, type: 3}
+  - {fileID: 8300000, guid: 0ecf5edaef00b6d44abe8f8756616be0, type: 3}
   gameplaySceneNames:
   - 03_Game
   - 04_OnlineGame
   masterVolume: 1
   musicVolume: 0.685
   sfxVolume: 1
+  ambientVolume: 0.5

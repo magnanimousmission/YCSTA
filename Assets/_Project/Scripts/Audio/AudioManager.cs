@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     [Header("Sources")]
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource loopingSfxSource;
     [SerializeField] private AudioSource ambientSource;
 
     [Header("Ambience Clips")]
@@ -26,6 +27,10 @@ public class AudioManager : MonoBehaviour
         PlayerJoinRoomSound = 2,
         PlayerLeaveRoomSound = 3,
         StartGameSound = 4,
+        PlayerRollSound = 5,
+        PlayerHealSound = 6,
+        PlayerWalkSound = 7,
+        HelicopterSound = 11,
     }
 
     [Header("Scene Music")]
@@ -43,6 +48,7 @@ public class AudioManager : MonoBehaviour
     private const string k_AmbientVol = "Vol_Ambient";
 
     private Coroutine musicFadeCoroutine;
+    private int currentLoopingSfxIndex = -1;
 
     private const int MainMenuClipIndex = 0;
     private const int GameplayClipIndex = 1;
@@ -122,6 +128,13 @@ public class AudioManager : MonoBehaviour
             sfxSource.playOnAwake = false;
         }
 
+        if (loopingSfxSource == null)
+        {
+            loopingSfxSource = gameObject.AddComponent<AudioSource>();
+            loopingSfxSource.loop = true;
+            loopingSfxSource.playOnAwake = false;
+        }
+
         if (ambientSource == null)
         {
             ambientSource = gameObject.AddComponent<AudioSource>();
@@ -134,6 +147,7 @@ public class AudioManager : MonoBehaviour
     {
         if (musicSource != null)   musicSource.volume   = masterVolume * musicVolume;
         if (sfxSource != null)     sfxSource.volume     = masterVolume * sfxVolume;
+        if (loopingSfxSource != null) loopingSfxSource.volume = masterVolume * sfxVolume;
         if (ambientSource != null) ambientSource.volume = masterVolume * ambientVolume;
     }
 
@@ -250,6 +264,7 @@ public class AudioManager : MonoBehaviour
     public void StopBackgroundAudio(float musicFadeTime = 0f)
     {
         StopMusic(musicFadeTime);
+        StopLoopingSfx();
 
         if (ambientSource == null)
             return;
@@ -286,6 +301,39 @@ public class AudioManager : MonoBehaviour
             return;
 
         PlaySfx(clip, volumeScale);
+    }
+
+    public void StartLoopingSfx(SfxClip sfx, float volumeScale = 1f)
+    {
+        int index = (int)sfx;
+        if (index < 0 || index >= soundClips.Count)
+            return;
+
+        AudioClip clip = soundClips[index];
+        if (clip == null || loopingSfxSource == null)
+            return;
+
+        if (loopingSfxSource.isPlaying && currentLoopingSfxIndex == index)
+            return;
+
+        loopingSfxSource.clip = clip;
+        loopingSfxSource.volume = volumeScale * masterVolume * sfxVolume;
+        loopingSfxSource.loop = true;
+        loopingSfxSource.Play();
+        currentLoopingSfxIndex = index;
+    }
+
+    public void StopLoopingSfx(SfxClip? sfx = null)
+    {
+        if (loopingSfxSource == null || !loopingSfxSource.isPlaying)
+            return;
+
+        if (sfx.HasValue && currentLoopingSfxIndex != (int)sfx.Value)
+            return;
+
+        loopingSfxSource.Stop();
+        loopingSfxSource.clip = null;
+        currentLoopingSfxIndex = -1;
     }
 
     private IEnumerator FadeMusic(AudioClip nextClip, float duration)

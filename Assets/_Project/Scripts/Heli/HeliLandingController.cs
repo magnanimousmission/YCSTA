@@ -11,6 +11,7 @@ public class HeliLandingController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private string rotorClipName = "rotation+No WHeels";
     [SerializeField] private float landingDuration = 8f;
+    [Range(0f, 1f)] [SerializeField] private float helicopterSfxVolume = 1f;
 
     private bool _landed = false;
 
@@ -32,6 +33,7 @@ public class HeliLandingController : MonoBehaviour
     public void StartLanding()
     {
         _landed = false;
+        AudioManager.Instance?.StartLoopingSfx(AudioManager.SfxClip.HelicopterSound, helicopterSfxVolume);
         splineAnimate.Play();
     }
 
@@ -43,9 +45,15 @@ public class HeliLandingController : MonoBehaviour
         {
             _landed = true;
             splineAnimate.Pause();
+            AudioManager.Instance?.StopLoopingSfx(AudioManager.SfxClip.HelicopterSound);
             
             StartCoroutine(SpinDown());
         }
+    }
+
+    private void OnDisable()
+    {
+        AudioManager.Instance?.StopLoopingSfx(AudioManager.SfxClip.HelicopterSound);
     }
 
     private IEnumerator SpinDown()

@@ -99,6 +99,8 @@ public class PauseMenuController : MonoBehaviourPunCallbacks
         if (!_isReturningToMainMenu)
             return;
 
+        AudioManager.Instance?.PlaySfx(AudioManager.SfxClip.PlayerLeaveRoomSound);
+
         LoadMainMenu();
     }
     

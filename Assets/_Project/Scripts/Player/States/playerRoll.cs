@@ -12,6 +12,8 @@ namespace Assets._Project.Scripts.Player.States
         public void Enter(PlayerCore player)
         {
             player.GetAnimator().SetBool("roll", true);
+            if (player.GetIsLocal())
+                AudioManager.Instance?.PlaySfx(AudioManager.SfxClip.PlayerRollSound);
 
         }
 

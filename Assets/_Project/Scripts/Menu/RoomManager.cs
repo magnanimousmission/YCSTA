@@ -230,6 +230,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        AudioManager.Instance?.PlaySfx(AudioManager.SfxClip.PlayerLeaveRoomSound);
         LoadingScreen.Show("Loading lobby...");
 
         var asyncOp = SceneManager.LoadSceneAsync("01_Lobby");

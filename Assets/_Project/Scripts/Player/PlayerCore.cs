@@ -15,6 +15,9 @@ public class PlayerCore : MonoBehaviour
     [SerializeField] private float playerHealth;
     [SerializeField] private float playerEnergy;
     [SerializeField] private float playerOxygen;
+    [Header("Audio")]
+    public float walkingSoundInterval = 0.45f;
+    public float runningSoundInterval = 0.3f;
 
     internal void SetJumpCooldown(float duration)
     {
@@ -58,6 +61,7 @@ public class PlayerCore : MonoBehaviour
     float rollCooldown = 3;
     float rollCooldownClock = 0;
     private bool _oxygenDepletedNotified;
+    private float _footstepTimer;
 
 
     internal void SetIsLocal(bool v)
@@ -116,6 +120,7 @@ public class PlayerCore : MonoBehaviour
         playerOxygen = playerData.oxygen;
         input.playerInput += PlayerInputHandler_playerInput;
         Cursor.visible = false;
+        _footstepTimer = 0f;
         initialized = true;
     }
 
@@ -450,6 +455,34 @@ public class PlayerCore : MonoBehaviour
 
 
             stateMachine.GetCurrentState().FixedUpdate(this);
+            HandleFootstepAudio();
         
+    }
+
+    private void HandleFootstepAudio()
+    {
+        if (!isLocalPlayer || AudioManager.Instance == null)
+            return;
+
+        Vector2 moveInput = input != null ? input.MoveDirection : Vector2.zero;
+        bool hasInput = moveInput.sqrMagnitude > 0.0001f;
+        bool isRunningByInput = playerInput != null && playerInput.sprint && playerEnergy > 0f;
+        bool blockedByState = stateMachine != null && (stateMachine.currentState == dead || stateMachine.currentState == fallen || stateMachine.currentState == oxygen);
+
+        if (!hasInput || rolling || GetIsJumping() || blockedByState)
+        {
+            _footstepTimer = 0f;
+            return;
+        }
+
+        float interval = isRunningByInput ? runningSoundInterval : walkingSoundInterval;
+        interval = Mathf.Max(0.05f, interval);
+        _footstepTimer += Time.deltaTime;
+
+        if (_footstepTimer >= interval)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.SfxClip.PlayerWalkSound);
+            _footstepTimer = 0f;
+        }
     }
 }

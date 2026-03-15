@@ -34,13 +34,13 @@ public class ExtractionStartingController : MonoBehaviour
 
     private void OnEnable()
     {
-        TimerController.onExtractingStarting += HandleExtractionStarting;
+        TimerController.OnExtractingStarting += HandleExtractionStarting;
         TimerController.OnTimerFinished += HandleTimerFinished;
     }
 
     private void OnDisable()
     {
-        TimerController.onExtractingStarting -= HandleExtractionStarting;
+        TimerController.OnExtractingStarting -= HandleExtractionStarting;
         TimerController.OnTimerFinished -= HandleTimerFinished;
         _audioSource.Stop();
     }

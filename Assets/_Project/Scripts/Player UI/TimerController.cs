@@ -14,7 +14,7 @@ public class TimerController : MonoBehaviour
     public static event Action OnTimerFinished;
     public static event Action<float> OnTimerTick;
 
-    public static event Action onExtractingStarting;
+    public static event Action OnExtractingStarting;
 
     public float CurrentTime => _currentTime;
     public float NormalizedTime => _currentTime / timerDuration;
@@ -41,7 +41,7 @@ public class TimerController : MonoBehaviour
         if (!_extractingStarted && _currentTime <= extractingStartTime)
         {
             _extractingStarted = true;
-            onExtractingStarting?.Invoke();
+            OnExtractingStarting?.Invoke();
             Debug.Log("Extracting starting");
         }
         

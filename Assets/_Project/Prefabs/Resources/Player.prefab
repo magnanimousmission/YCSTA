@@ -358,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3340888230391862772}
   - component: {fileID: 2572132925011603691}
-  - component: {fileID: 6594561986987393202}
+  - component: {fileID: 4071888471534769374}
   m_Layer: 0
   m_Name: Interaction
   m_TagString: Untagged
@@ -375,7 +375,7 @@ Transform:
   m_GameObject: {fileID: 1349500774414776540}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -393,10 +393,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec195a5eab09cf0478914eb0a49b2fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactor
-  myCollider: {fileID: 6594561986987393202}
-  player: {fileID: 5190147562375330180}
---- !u!65 &6594561986987393202
-BoxCollider:
+  playerRoot: {fileID: 1718840798161389148}
+  spreadAngle: 30
+  horizontalRayCount: 6
+  verticalRayCount: 6
+  verticalSpreadAngle: 20
+  verticalBias: 0.25
+  interactableMask:
+    serializedVersion: 2
+    m_Bits: 128
+  interactorSource: {fileID: 4246994465394982424}
+  interactorRange: 8
+--- !u!135 &4071888471534769374
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -412,10 +421,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.9399005, z: 0.8407505}
-  m_Center: {x: 0, y: 0.9196374, z: 0.26903972}
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1383559891737376868
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,13 +1003,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2383179403632209473}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.005151826, y: -0, z: -0, w: 0.99998677}
+  m_LocalRotation: {x: 0.12128902, y: -0, z: -0, w: 0.9926173}
   m_LocalPosition: {x: 0, y: 1.421, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7566643690611805285}
-  m_LocalEulerAnglesHint: {x: -0.59, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 13.933, y: 0, z: 0}
 --- !u!1 &2789094798990133516
 GameObject:
   m_ObjectHideFlags: 0

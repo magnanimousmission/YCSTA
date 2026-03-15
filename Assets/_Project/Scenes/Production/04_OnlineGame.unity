@@ -3539,6 +3539,7 @@ MonoBehaviour:
   heliAnimation: {fileID: 2006505849}
   rotorClipName: Rotation+NO Wheels
   landingDuration: 10
+  helicopterSfxVolume: 1
 --- !u!114 &2006505851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3959,6 +3960,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73c6ce223fad8eb46988ca9cf0d28876, type: 3}
+--- !u!1001 &2741055125577479508
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2600294365100633612, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_Name
+      value: HeliAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2600294365100633612, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665814142990530023, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1021.6344
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665814142990530023, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 730.08673
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665814142990530023, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 185.11462
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665814142990530023, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665814142990530023, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665814142990530023, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665814142990530023, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665814142990530023, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665814142990530023, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665814142990530023, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f16452b95d9d83f4ea98a6e045cc0666, type: 3}
 --- !u!1001 &3467910086232677258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4647,3 +4709,4 @@ SceneRoots:
   - {fileID: 648501798}
   - {fileID: 3467910086232677258}
   - {fileID: 783460045880482632}
+  - {fileID: 2741055125577479508}

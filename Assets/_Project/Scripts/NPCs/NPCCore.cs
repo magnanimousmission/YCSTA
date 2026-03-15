@@ -15,7 +15,6 @@ public class NPCCore : MonoBehaviour
     [SerializeField] private NPCInputHandler input;
     [SerializeField] private float npcHealth;
     [SerializeField] private float npcEnergy;
-    [SerializeField] private float npcOxygen;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] bool teamMember = false;
 
@@ -55,7 +54,7 @@ public class NPCCore : MonoBehaviour
     private float _energyRecoveryTimer = 0f;
 
     npcDead dead = new();
-    npcInteracting interacting = new();
+    internal npcInteracting interacting = new();
     internal npcJumping jump = new();
 
     bool refillingOxygen = false;
@@ -102,7 +101,6 @@ public class NPCCore : MonoBehaviour
         stateMachine.GetCurrentState().Enter(this);
         npcHealth = npcData.health;
         npcEnergy = npcData.energy;
-        npcOxygen = npcData.oxygen;
         npcInput = new NPCInputEventArgs();
         input.npcInput += NPCInputHandler_playerInput;
         Cursor.visible = false;
@@ -141,6 +139,16 @@ public class NPCCore : MonoBehaviour
 
     private void NPCInputHandler_playerInput(object sender, NPCInputEventArgs NpcInput)
     {
+        npcInput = NpcInput;
+        if (npcInput.reset)
+        {
+            stateMachine.GetCurrentState().Exit(this);
+            stateMachine.SetCurrentNPCState(idle);
+            stateMachine.GetCurrentState().Enter(this);
+            NpcInput.reset = false;
+            npcInput.reset = false;
+        }
+
         if (stateMachine.GetCurrentState() == fallen ||
             stateMachine.GetCurrentState() == dead ||
             stateMachine.GetCurrentState() == interacting ||
@@ -148,14 +156,11 @@ public class NPCCore : MonoBehaviour
             GetIsRolling())
             return;
 
-        npcInput = NpcInput;
         EvaluateInput(npcInput);
     }
 
     internal void EvaluateInput(NPCInputEventArgs NPCInput)
     {
-        if (NPCInput == null || stateMachine.GetCurrentState() == fallen || stateMachine.GetCurrentState() == dead || stateMachine.GetCurrentState() == interacting)
-            return;
 
         if (NPCInput.jump && npcEnergy > npcData.jumpingEnergyDrain)
         {
@@ -188,7 +193,6 @@ public class NPCCore : MonoBehaviour
             if (stateMachine.currentState != interacting)
                 stateMachine.currentState.Exit(this);
 
-            refillingOxygen = true;
             stateMachine.SetCurrentNPCState(interacting);
             stateMachine.GetCurrentState().Enter(this);
         }
@@ -250,29 +254,9 @@ public class NPCCore : MonoBehaviour
         OnEnergyChanged?.Invoke(npcEnergy, npcData.energy);
     }
 
-    internal float GetPlayerOxygen() => npcOxygen;
-
-    internal void DrainPlayerOxygen(float value)
-    {
-        npcOxygen = Mathf.Clamp(value, 0, npcData.oxygen);
-        OnOxygenChanged?.Invoke(npcOxygen, npcData.oxygen);
-    }
-
-    internal void RefillingPlayerOxygen(float value)
-    {
-        refillingOxygen = true;
-        npcOxygen += npcData.oxygenRecoveryRate * value;
-        npcOxygen = Mathf.Clamp(npcOxygen, 0, npcData.oxygen);
-        OnOxygenChanged?.Invoke(npcOxygen, npcData.oxygen);
-    }
-
-    internal void TriggerOxygenRefill()
-    {
-        refillingOxygen = true;
-    }
-
     void Update()
     {
+
         if (GetIsJumping())
         {
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -336,16 +320,6 @@ public class NPCCore : MonoBehaviour
         else if (npcHealth > 5 && (stateMachine.currentState == fallen || stateMachine.currentState == dead))
         {
             stateMachine.currentState.Exit(this);
-            stateMachine.SetCurrentNPCState(idle);
-            stateMachine.GetCurrentState().Enter(this);
-        }
-
-        DrainPlayerOxygen(npcOxygen - (npcData.oxygenPassiveDrainRate * Time.deltaTime));
-
-        if (refillingOxygen && npcInput != null && !npcInput.interacting)
-        {
-            refillingOxygen = false;
-            stateMachine.GetCurrentState().Exit(this);
             stateMachine.SetCurrentNPCState(idle);
             stateMachine.GetCurrentState().Enter(this);
         }

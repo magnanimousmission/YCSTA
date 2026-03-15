@@ -277,7 +277,7 @@ public class PlayerCore : MonoBehaviour
     
     void Update()
     {
-        Debug.Log(stateMachine.GetCurrentState());
+       // Debug.Log(stateMachine.GetCurrentState());
         //if (playerOxygen <= 0 && !_oxygenDepletedNotified)
         //{
             //_oxygenDepletedNotified = true;
@@ -325,7 +325,7 @@ public class PlayerCore : MonoBehaviour
 
             float progress = stateInfo.normalizedTime;
 
-            Debug.Log(progress);
+            //Debug.Log(progress);
 
             if (progress >= 1 && (stateInfo.IsName("Stand To Roll") || stateInfo.IsName("Jumping") || stateInfo.IsName("Jump Running") || stateInfo.IsName("Jump Walking")))
             {

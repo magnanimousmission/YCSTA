@@ -9,7 +9,6 @@ public class PlayerInputHandler : MonoBehaviour
     public event EventHandler<PlayerInputEventArgs> playerInput;
     PlayerInputEventArgs newInput = new();
     [SerializeField] InputActionReference sprint;
-    [SerializeField] InputActionReference interact;
     [SerializeField] InputActionReference jump;
     [SerializeField] InputActionReference roll;
     private bool shouldProcessInput = true;
@@ -64,12 +63,6 @@ public class PlayerInputHandler : MonoBehaviour
             playerInput?.Invoke(this, newInput);
         }
 
-        bool interactPressed = interact.action.IsPressed();
-        if (interactPressed != newInput.interact)
-        {
-            newInput.interact = interactPressed;
-            playerInput?.Invoke(this, newInput);
-        }
 
         if (jump.action.WasPressedThisFrame() && !player.GetIsJumping())
         {

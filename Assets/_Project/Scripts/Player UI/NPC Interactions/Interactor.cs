@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 interface IInteractable
 {
@@ -17,6 +18,7 @@ public class Interactor : MonoBehaviour
     [SerializeField] private float verticalSpreadAngle = 20f;
     [SerializeField] [Range(0f, 1f)] private float verticalBias = 0.25f;
     [SerializeField] private LayerMask interactableMask;
+    [SerializeField] InputActionReference interact;
 
     public Transform interactorSource;
     public float interactorRange;
@@ -52,8 +54,12 @@ public class Interactor : MonoBehaviour
             interactObj.RotateUI(interactorSource);
             _lastInteractable = interactObj;
 
-            if (Input.GetKeyDown(KeyCode.E))
+            bool interactPressed = interact.action.WasPressedThisFrame();
+            if (interactPressed)
+            {
                 interactObj.Interact(playerRoot);
+            }
+
 
             return true;
         }

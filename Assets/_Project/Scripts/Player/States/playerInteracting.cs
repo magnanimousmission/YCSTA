@@ -41,7 +41,7 @@ namespace Assets.Scripts.Player
         public void Exit(PlayerCore player)
         {
             player.GetAnimator().SetBool("interacting", false);
-
+            player.playerInput.interact = false;
         }
 
         public string GetStateName()

@@ -2310,6 +2310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCInputHandler
   followStopDistance: 1.5
   sprintDistance: 5
+  myCollider: {fileID: 0}
 --- !u!1 &5409230938536549807
 GameObject:
   m_ObjectHideFlags: 0
@@ -3235,7 +3236,6 @@ MonoBehaviour:
   input: {fileID: 1394446707356834267}
   npcHealth: 100
   npcEnergy: 100
-  npcOxygen: 100
   agent: {fileID: 2451030141056964644}
   teamMember: 0
 --- !u!114 &1394446707356834267
@@ -3252,6 +3252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCInputHandler
   followStopDistance: 1.5
   sprintDistance: 5
+  myCollider: {fileID: 8233056863077752929}
 --- !u!135 &8233056863077752929
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3271,7 +3272,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6802428762425307107
 GameObject:
@@ -4377,11 +4378,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400022, guid: 11f2833e438a19644aef9b3fd17cbb67, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400022, guid: 11f2833e438a19644aef9b3fd17cbb67, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.402
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400022, guid: 11f2833e438a19644aef9b3fd17cbb67, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5587,6 +5588,10 @@ PrefabInstance:
     - target: {fileID: 5530459353202792418, guid: 08e4a4be365d7a14bb04ddafb86ef44d, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035202105123310328, guid: 08e4a4be365d7a14bb04ddafb86ef44d, type: 3}
+      propertyPath: m_Radius
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

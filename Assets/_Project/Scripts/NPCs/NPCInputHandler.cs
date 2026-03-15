@@ -11,8 +11,8 @@ public class NPCInputHandler : MonoBehaviour
 
     private NPCInputEventArgs _currentInput = new();
     private bool _shouldProcessInput  = true;
-    private Transform _target;
-    
+    [SerializeField]private Collider myCollider;
+
     public event Action OnTargetLost;
 
     private void Awake()
@@ -34,9 +34,10 @@ public class NPCInputHandler : MonoBehaviour
     
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && other.transform == _target)
+        if (myCollider.bounds.Contains(other.transform.position)) return;
+
+        if (other.CompareTag("Player") && other.gameObject == _currentInput.target)
         {
-            _target = null;
             ClearInput();
             OnTargetLost?.Invoke();
         }
@@ -44,9 +45,8 @@ public class NPCInputHandler : MonoBehaviour
 
     public void SetTarget(GameObject target)
     {
-        _target = target != null ? target.transform : null;
-        _currentInput.target = target;
-        gameObject.GetComponent<NPCCore>().SetAnimatorBool("Idle", true);
+        if(target != null)
+            _currentInput.target = target;
     
     }
 
@@ -58,10 +58,10 @@ public class NPCInputHandler : MonoBehaviour
             return;
         }
 
-        if (_target == null)
+        if (_currentInput.target == null)
             return;
 
-        Vector3 toPlayer = _target.position - transform.position;
+        Vector3 toPlayer = _currentInput.target.transform.position - transform.position;
         float distance = toPlayer.magnitude;
 
         if (distance > followStopDistance)
@@ -90,6 +90,7 @@ public class NPCInputHandler : MonoBehaviour
         _currentInput.roll = false;
         _currentInput.interacting = false;
         _currentInput.target = null;
+        _currentInput.reset = true;
         npcInput?.Invoke(this, _currentInput);
     }
 }

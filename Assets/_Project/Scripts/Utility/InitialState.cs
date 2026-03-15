@@ -46,5 +46,6 @@ public class InitialState : MonoBehaviour
     {
         animator.SetBool(parameterToActivateFirst, false);
         animator.SetBool(triggerActivatedParameter, false);
+        this.enabled = false;
     }
 }

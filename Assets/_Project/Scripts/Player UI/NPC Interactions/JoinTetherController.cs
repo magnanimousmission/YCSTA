@@ -20,21 +20,30 @@ public class JoinTetherController : BaseInteractable
     {
         if (_hasInteracted) return;
         _hasInteracted = true;
-        
+        PlayerCore player;
         var otherAura = interactorSource.GetComponentInChildren<AuraController>();
         if (otherAura == null || otherAura == ownerAuraController)
         {
-            gameObject.GetComponentInParent<Animator>().SetBool("talking", false);
+            player = interactorSource.GetComponentInChildren<PlayerCore>();
+            player.GetStateMachine().SetCurrentPlayerState(player.idle);
             return;
         }
 
         ownerAuraController.AddPeer(otherAura);
         otherAura.AddPeer(ownerAuraController);
-        InteractUI.SetActive(false);
-        
+
         npcInputHandler.SetTarget(interactorSource);
+
         InteractUI.SetActive(false);
-        gameObject.GetComponentInParent<Animator>().SetBool("talking", false);
+
+        player = interactorSource.GetComponentInChildren<PlayerCore>();
+        InitialState isController = gameObject.GetComponentInParent<InitialState>();
+        isController.RemoveParameters();
+        NPCCore npc = isController.gameObject.GetComponentInChildren<NPCCore>();
+        npc.GetStateMachine().GetCurrentState().Exit(npc);
+        npc.GetStateMachine().SetCurrentNPCState(npc.interacting);
+        npc.GetStateMachine().GetCurrentState().Enter(npc);
+        player.GetStateMachine().SetCurrentPlayerState(player.idle);
     }
     
     private void OnNPCTargetLost()

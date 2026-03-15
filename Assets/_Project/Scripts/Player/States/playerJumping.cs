@@ -14,6 +14,8 @@ namespace Assets._Project.Scripts.Player.States
 
 
 
+
+
             player.DecreasePlayerEnergyInstantly();
 
         }
@@ -26,12 +28,7 @@ namespace Assets._Project.Scripts.Player.States
 
         public void FixedUpdate(PlayerCore player)
         {
-            // Get info for the state currently playing on Layer 0
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-            float duration = stateInfo.length;
-            //Debug.Log(duration);
-            player.SetJumpCooldown(duration);
         }
 
         public string GetStateName()

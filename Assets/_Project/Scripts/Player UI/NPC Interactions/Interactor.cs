@@ -10,63 +10,49 @@ interface IInteractable
 
 public class Interactor : MonoBehaviour
 {
+    [SerializeField] Collider myCollider;
     [SerializeField]
-    private GameObject playerRoot;
-    [SerializeField] private float spreadAngle = 15f;
-    [SerializeField] private int rayCount = 10;
-
-    public Transform interactorSource;
-    public float interactorRange;
-
-    private IInteractable _lastInteractable;
+    private PlayerCore player;
     
     private void Update()
     {
-        if (TryInteract())
-            return;
 
-        if (_lastInteractable != null)
-        {
-            _lastInteractable.IsLookingAt = false;
-            _lastInteractable = null;
-        }
+
     }
 
-    private bool TryInteract()
+
+    private void TryInteract(GameObject other)
     {
-        foreach (var direction in GetRayDirections())
+
+        other = other.GetComponentInParent<Animator>().gameObject;
+
+        IInteractable interactObj;
+        interactObj = other.GetComponentInChildren<IInteractable>();
+
+        if (interactObj != null)
         {
-            Ray r = new Ray(interactorSource.position, direction);
-            if (!Physics.Raycast(r, out RaycastHit hitInfo, interactorRange))
-                continue;
-            if (!hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
-                continue;
-
-            if (_lastInteractable != null && _lastInteractable != interactObj)
-                _lastInteractable.IsLookingAt = false;
-
+            Debug.Log("IInt found");
             interactObj.IsLookingAt = true;
-            interactObj.RotateUI(interactorSource);
-            _lastInteractable = interactObj;
+            interactObj.RotateUI(player.GetComponentInParent<Animator>().gameObject.transform);
 
-            if (Input.GetKeyDown(KeyCode.E))
-                interactObj.Interact(playerRoot);
-
-            return true;
         }
-        return false;
-    }
-    
-    private IEnumerable<Vector3> GetRayDirections()
-    {
-        yield return interactorSource.forward;
-
-        for (var i = 0; i < rayCount; i++)
+        else
         {
-            var angle = Mathf.Lerp(-spreadAngle, spreadAngle, i / (float)(rayCount - 1));
-            Quaternion rotation = Quaternion.AngleAxis(angle, interactorSource.up);
-            yield return rotation * interactorSource.forward;
+            Debug.Log("IInt not found");
+
         }
+
+        if (interactObj != null)
+            player.InteractWithObject(other);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!myCollider.bounds.Contains(other.transform.position)) return;
+
+        Debug.Log(other.gameObject.transform.tag);
+        if(!other.gameObject.CompareTag("Terrain"))
+            TryInteract(other.gameObject);
     }
 }
 

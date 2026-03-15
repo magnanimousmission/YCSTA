@@ -7,7 +7,8 @@ public class NPCInputHandler : MonoBehaviour
     public event EventHandler<NPCInputEventArgs> npcInput;
 
     [SerializeField] private float followStopDistance = 1.5f;
-    
+    [SerializeField] private float sprintDistance = 5f;
+
     private NPCInputEventArgs _currentInput = new();
     private bool _shouldProcessInput  = true;
     private Transform _target;
@@ -45,8 +46,10 @@ public class NPCInputHandler : MonoBehaviour
     {
         _target = target != null ? target.transform : null;
         _currentInput.target = target;
-    }
+        gameObject.GetComponent<NPCCore>().SetAnimatorBool("Idle", true);
     
+    }
+
     private void Update()
     {
         if (!_shouldProcessInput)
@@ -54,10 +57,10 @@ public class NPCInputHandler : MonoBehaviour
             ClearInput();
             return;
         }
-        
+
         if (_target == null)
             return;
-        
+
         Vector3 toPlayer = _target.position - transform.position;
         float distance = toPlayer.magnitude;
 
@@ -65,17 +68,17 @@ public class NPCInputHandler : MonoBehaviour
         {
             Vector3 localDir = transform.InverseTransformDirection(toPlayer.normalized);
             _currentInput.move = new Vector2(localDir.x, localDir.z);
+            _currentInput.sprint = distance > sprintDistance;
         }
         else
         {
             _currentInput.move = Vector2.zero;
+            _currentInput.sprint = false;
         }
 
-        _currentInput.sprint = false;
         _currentInput.jump = false;
         _currentInput.roll = false;
         _currentInput.oxygen = false;
-
         npcInput?.Invoke(this, _currentInput);
     }
 

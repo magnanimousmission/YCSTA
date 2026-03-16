@@ -49918,7 +49918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &478511218
 Transform:
   m_ObjectHideFlags: 0
@@ -209137,6 +209137,10 @@ PrefabInstance:
       propertyPath: playerPrefab
       value: 
       objectReference: {fileID: 252960752971941632, guid: 63ed0dffeee008341a4a42789fccc122, type: 3}
+    - target: {fileID: 3655673684632057810, guid: 2664465ba471878429ded1f3083c6d30, type: 3}
+      propertyPath: waitForIntro
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3655673684632057810, guid: 2664465ba471878429ded1f3083c6d30, type: 3}
       propertyPath: 'spawnPoints.Array.data[0]'
       value: 

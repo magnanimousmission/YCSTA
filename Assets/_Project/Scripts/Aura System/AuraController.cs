@@ -10,7 +10,7 @@ public class AuraController : MonoBehaviour
     [SerializeField] private AuraOwnerType ownerType = AuraOwnerType.Player;
     [SerializeField] private float auraContributionPercentage = 12f;
     [SerializeField] private bool startsWithNoAura = false;
-    
+    private bool isTethered;
     private readonly HashSet<AuraController> _peers = new HashSet<AuraController>();
     private const float TotalAura = 100f;
     private static int _playerCount = 0;
@@ -49,6 +49,11 @@ public class AuraController : MonoBehaviour
             BroadcastGroupAura();
     }
     
+    internal bool GetIsTethered()
+    {
+        return isTethered;
+    }
+
     public void RequestCurrentAura()
     {
         BroadcastGroupAura();
@@ -57,13 +62,22 @@ public class AuraController : MonoBehaviour
     public void AddPeer(AuraController other)
     {
         if (_peers.Add(other))
+        {
             BroadcastGroupAura();
+            isTethered = true;
+        }
+
     }
 
     public void RemovePeer(AuraController other)
     {
         if (_peers.Remove(other))
+        {
             BroadcastGroupAura();
+            if(GetConnectedGroup().Count < 1)
+                isTethered=false;
+        }
+
     }
 
     private HashSet<AuraController> GetConnectedGroup()

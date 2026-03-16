@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,11 +22,21 @@ namespace Assets.Scripts.Player
                 player.GetStateMachine().GetCurrentState().Enter(player);
 
             }
-            else if(_lastInteractable != null)
+            else if (_lastInteractable != null)
             {
                 player.GetAnimator().SetBool("interacting", true);
-                Interact(_lastInteractable, player.GetComponentInParent<Animator>().gameObject);
 
+                // Get the actual player GameObject you're passing in
+                GameObject playerGO = player.GetComponentInParent<Animator>().gameObject;
+                PhotonView playerPV = playerGO.GetComponent<PhotonView>();
+
+                // Call Interact locally as before, but also sync the target to the NPC
+                Interact(_lastInteractable, playerGO);
+
+                // Tell the NPC on all clients who the target is
+                PhotonView npcPV = _lastInteractable.GetComponent<PhotonView>();
+                if (npcPV != null && playerPV != null)
+                    npcPV.RPC("SetTarget", RpcTarget.All, playerPV.ViewID);
             }
             else
             {

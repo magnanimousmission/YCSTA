@@ -7,6 +7,8 @@ TagManager:
   - AuraObject
   - Terrain
   - TetherAnchor
+  - Extraction
+  - NPC
   layers:
   - Default
   - TransparentFX

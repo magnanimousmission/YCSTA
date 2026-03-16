@@ -5520,7 +5520,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816577398276841303}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
@@ -5544,7 +5544,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816577398276841303}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
@@ -5560,7 +5560,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816577398276841303}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
   m_Name: 
@@ -5608,8 +5608,17 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: roll
   - Type: 4
-    SynchronizeType: 1
-    Name: interacting
+    SynchronizeType: 0
+    Name: oxygen
+  - Type: 4
+    SynchronizeType: 0
+    Name: cry
+  - Type: 4
+    SynchronizeType: 0
+    Name: Crawlback
+  - Type: 4
+    SynchronizeType: 0
+    Name: talking
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

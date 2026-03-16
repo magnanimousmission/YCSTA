@@ -4273,6 +4273,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 345485482934238784}
     - target: {fileID: 2130864881058557089, guid: 94d8a5d6363e93f47aef67e21757f8ae, type: 3}
+      propertyPath: _photonView
+      value: 
+      objectReference: {fileID: 9129059442791810403}
+    - target: {fileID: 2130864881058557089, guid: 94d8a5d6363e93f47aef67e21757f8ae, type: 3}
       propertyPath: npcInputHandler
       value: 
       objectReference: {fileID: 1275630038590924181}
@@ -5569,6 +5573,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100022, guid: 11f2833e438a19644aef9b3fd17cbb67, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1239634398343692479}
+    - targetCorrespondingSourceObject: {fileID: 100022, guid: 11f2833e438a19644aef9b3fd17cbb67, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7860898526186488690}
   m_SourcePrefab: {fileID: 100100000, guid: 11f2833e438a19644aef9b3fd17cbb67, type: 3}
 --- !u!1 &8734201343243719315 stripped
 GameObject:
@@ -5821,11 +5828,33 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: roll
   - Type: 4
-    SynchronizeType: 1
-    Name: interacting
+    SynchronizeType: 0
+    Name: oxygen
+  - Type: 4
+    SynchronizeType: 0
+    Name: cry
+  - Type: 4
+    SynchronizeType: 0
+    Name: Crawlback
+  - Type: 4
+    SynchronizeType: 0
+    Name: talking
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!114 &7860898526186488690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8734201343243719315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76c524d42a5cb94ba16d0208e4b0c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExtractingNPCController
+  npcInputHandler: {fileID: 1275630038590924181}
 --- !u!4 &8734201343244209843 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400022, guid: 11f2833e438a19644aef9b3fd17cbb67, type: 3}

@@ -12,7 +12,6 @@ public class SpawnScript : MonoBehaviour
         PlayerCore core = newPLayer.GetComponentInChildren<PlayerCore>();
         core.gameObject.GetComponentInParent<LookAtMouse>().enabled = true;
         //Camera.main.enabled = true;
-        core.SetIsLocal(true);
     }
 
     // Update is called once per frame

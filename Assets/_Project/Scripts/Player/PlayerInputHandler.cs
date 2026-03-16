@@ -9,7 +9,6 @@ public class PlayerInputHandler : MonoBehaviour
     public event EventHandler<PlayerInputEventArgs> playerInput;
     PlayerInputEventArgs newInput = new();
     [SerializeField] InputActionReference sprint;
-    [SerializeField] InputActionReference oxygen;
     [SerializeField] InputActionReference jump;
     [SerializeField] InputActionReference roll;
     private bool shouldProcessInput = true;
@@ -53,55 +52,30 @@ public class PlayerInputHandler : MonoBehaviour
         //Debug.Log(MoveDirection);
         playerInput?.Invoke(this, newInput);
     }
-
     private void Update()
     {
         if (_isPauseMenuToggled) return;
 
-        if (sprint.action.IsPressed())
+        bool sprintPressed = sprint.action.IsPressed();
+        if (sprintPressed != newInput.sprint)
         {
-            newInput.sprint = true;
-            playerInput?.Invoke(this, newInput);
-
-        }
-        else
-        {
-            newInput.sprint = false;
+            newInput.sprint = sprintPressed;
             playerInput?.Invoke(this, newInput);
         }
 
-        if (oxygen.action.IsPressed())
-        {
-            newInput.oxygen = true;
-            playerInput?.Invoke(this, newInput);
-
-
-        }
-        else
-        {
-            newInput.oxygen = false;
-            playerInput?.Invoke(this, newInput);
-        }
 
         if (jump.action.WasPressedThisFrame() && !player.GetIsJumping())
         {
             newInput.jump = true;
             playerInput?.Invoke(this, newInput);
+            newInput.jump = false;
         }
 
-
-        if (roll.action.IsPressed())
+        if (roll.action.WasPressedThisFrame() && !player.GetIsRolling())
         {
             newInput.roll = true;
             playerInput?.Invoke(this, newInput);
-
-
-        }
-        else
-        {
             newInput.roll = false;
-            playerInput?.Invoke(this, newInput);
         }
-
     }
 }

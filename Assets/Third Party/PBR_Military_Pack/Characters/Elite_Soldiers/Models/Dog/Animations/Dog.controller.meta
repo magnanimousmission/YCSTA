@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 8718650a9055cef4e9453b88d1dd9ed7
+timeCreated: 1567240992
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/Elite_Soldiers/Models/Dog/Animations/Dog.controller
+  uploadId: 354699

@@ -15,14 +15,8 @@ public class NPCCore : MonoBehaviour
     [SerializeField] private NPCInputHandler input;
     [SerializeField] private float npcHealth;
     [SerializeField] private float npcEnergy;
-    [SerializeField] private float npcOxygen;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] bool teamMember = false;
-
-    internal void SetJumpCooldown(float duration)
-    {
-        jumpCooldown = duration;
-    }
 
     internal NPCInputEventArgs npcInput;
 
@@ -35,6 +29,14 @@ public class NPCCore : MonoBehaviour
         else return false;
     }
 
+    internal bool GetIsRolling()
+    {
+        if (stateMachine.GetCurrentState() == roll)
+            return true;
+        else
+            return false;
+    }
+
     npcWalking walking = new();
     npcRunning running = new();
     npcFallen fallen = new();
@@ -44,22 +46,20 @@ public class NPCCore : MonoBehaviour
     public event Action<float, float> OnEnergyChanged;
     public event Action<float, float> OnOxygenChanged;
 
+    internal void SetAnimatorBool(string v, bool YesNo)
+    {
+        animator.SetBool(v, YesNo);
+    }
+
     private float _energyRecoveryTimer = 0f;
 
     npcDead dead = new();
-    npcInteracting interacting = new();
+    internal npcInteracting interacting = new();
     internal npcJumping jump = new();
 
     bool refillingOxygen = false;
 
-    float jumpCooldown = 2;
-    float jumpCooldownClock = 0;
-
-    private bool rolling = false;
-    private bool rollLock = false;
-    float rollCooldown = 3;
-    float rollCooldownClock = 0;
-
+    private bool _oxygenDepletedNotified;
     private NPCStateMachine stateMachine;
     private PhotonView ownerPhotonView;
     bool initialized = false;
@@ -77,7 +77,6 @@ public class NPCCore : MonoBehaviour
     void Awake()
     {
         ownerPhotonView = GetComponentInParent<PhotonView>();
-
     }
 
     private void Start()
@@ -102,7 +101,6 @@ public class NPCCore : MonoBehaviour
         stateMachine.GetCurrentState().Enter(this);
         npcHealth = npcData.health;
         npcEnergy = npcData.energy;
-        npcOxygen = npcData.oxygen;
         npcInput = new NPCInputEventArgs();
         input.npcInput += NPCInputHandler_playerInput;
 
@@ -146,17 +144,27 @@ public class NPCCore : MonoBehaviour
     private void NPCInputHandler_playerInput(object sender, NPCInputEventArgs NpcInput)
     {
         npcInput = NpcInput;
-        Debug.Log(npcInput.move);
+        if (npcInput.reset)
+        {
+            stateMachine.GetCurrentState().Exit(this);
+            stateMachine.SetCurrentNPCState(idle);
+            stateMachine.GetCurrentState().Enter(this);
+            NpcInput.reset = false;
+            npcInput.reset = false;
+        }
+
+        if (stateMachine.GetCurrentState() == fallen ||
+            stateMachine.GetCurrentState() == dead ||
+            stateMachine.GetCurrentState() == interacting ||
+            GetIsJumping() ||
+            GetIsRolling())
+            return;
+
         EvaluateInput(npcInput);
     }
 
     internal void EvaluateInput(NPCInputEventArgs NPCInput)
     {
-
-        if (NPCInput == null || stateMachine.GetCurrentState() == fallen || stateMachine.GetCurrentState() == dead || stateMachine.GetCurrentState() == interacting || GetIsJumping())
-            return;
-
-
 
         if (NPCInput.jump && npcEnergy > npcData.jumpingEnergyDrain)
         {
@@ -171,101 +179,49 @@ public class NPCCore : MonoBehaviour
             NPCInput.jump = false;
         }
 
-        if (NPCInput.roll && !rollLock && npcEnergy > 0)
+        if (NPCInput.roll && !GetIsRolling() && npcEnergy > 0)
         {
             if (stateMachine.currentState != roll)
                 stateMachine.currentState.Exit(this);
 
-            rollLock = true;
-            rolling = true;
             stateMachine.SetCurrentNPCState(roll);
             stateMachine.GetCurrentState().Enter(this);
         }
+        else if (NPCInput.roll)
+        {
+            NPCInput.roll = false;
+        }
 
-        if (NPCInput.oxygen)
+        if (NPCInput.interacting)
         {
             if (stateMachine.currentState != interacting)
                 stateMachine.currentState.Exit(this);
 
-            refillingOxygen = true;
             stateMachine.SetCurrentNPCState(interacting);
             stateMachine.GetCurrentState().Enter(this);
         }
 
         if (NPCInput.move != Vector2.zero && !NPCInput.sprint)
         {
-
-            if (stateMachine.currentState != walking)
+            if (stateMachine.currentState != walking && !GetIsRolling() && !GetIsJumping())
             {
                 stateMachine.currentState.Exit(this);
                 stateMachine.SetCurrentNPCState(walking);
                 stateMachine.GetCurrentState().Enter(this);
-
-                if (NPCInput.jump && npcEnergy > npcData.jumpingEnergyDrain)
-                {
-                    if (stateMachine.currentState != jump)
-                        stateMachine.currentState.Exit(this);
-
-                    stateMachine.SetCurrentNPCState(jump);
-                    stateMachine.GetCurrentState().Enter(this);
-                }
-                else if (NPCInput.jump && npcEnergy < npcData.jumpingEnergyDrain)
-                {
-                    NPCInput.jump = false;
-                }
-
-                if (NPCInput.roll)
-                {
-                    if (stateMachine.currentState != roll)
-                        stateMachine.currentState.Exit(this);
-
-                    rollLock = true;
-                    rolling = true;
-                    stateMachine.SetCurrentNPCState(roll);
-                    stateMachine.GetCurrentState().Enter(this);
-                }
             }
         }
         else if (NPCInput.move != Vector2.zero && NPCInput.sprint && npcEnergy > 0)
         {
-
-
-            if (stateMachine.currentState != running)
+            if (stateMachine.currentState != running && !GetIsRolling() && !GetIsJumping())
             {
                 stateMachine.currentState.Exit(this);
                 stateMachine.SetCurrentNPCState(running);
                 stateMachine.GetCurrentState().Enter(this);
-
-                if (NPCInput.jump && npcEnergy > npcData.jumpingEnergyDrain)
-                {
-                    if (stateMachine.currentState != jump)
-                        stateMachine.currentState.Exit(this);
-
-                    stateMachine.SetCurrentNPCState(jump);
-                    stateMachine.GetCurrentState().Enter(this);
-                }
-                else if (NPCInput.jump && npcEnergy < npcData.jumpingEnergyDrain)
-                {
-                    NPCInput.jump = false;
-                }
-
-                if (NPCInput.roll)
-                {
-                    if (stateMachine.currentState != roll)
-                        stateMachine.currentState.Exit(this);
-
-                    rollLock = true;
-                    rolling = true;
-                    stateMachine.SetCurrentNPCState(roll);
-                    stateMachine.GetCurrentState().Enter(this);
-                }
             }
         }
         else if (NPCInput.move == Vector2.zero)
         {
-
-
-            if (stateMachine.currentState != idle)
+            if (stateMachine.currentState != idle && !GetIsRolling() && !GetIsJumping())
             {
                 stateMachine.currentState.Exit(this);
                 stateMachine.SetCurrentNPCState(idle);
@@ -302,67 +258,49 @@ public class NPCCore : MonoBehaviour
         OnEnergyChanged?.Invoke(npcEnergy, npcData.energy);
     }
 
-    internal float GetPlayerOxygen() => npcOxygen;
-
-    internal void DrainPlayerOxygen(float value)
-    {
-        npcOxygen = Mathf.Clamp(value, 0, npcData.oxygen);
-        OnOxygenChanged?.Invoke(npcOxygen, npcData.oxygen);
-    }
-
-    internal void RefillingPlayerOxygen(float value)
-    {
-        refillingOxygen = true;
-        npcOxygen += npcData.oxygenRecoveryRate * value;
-        npcOxygen = Mathf.Clamp(npcOxygen, 0, npcData.oxygen);
-        OnOxygenChanged?.Invoke(npcOxygen, npcData.oxygen);
-    }
-
-    internal void TriggerOxygenRefill()
-    {
-        refillingOxygen = true;
-    }
-
     void Update()
     {
+
         if (GetIsJumping())
         {
-            jumpCooldownClock += Time.fixedDeltaTime;
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            float progress = stateInfo.normalizedTime;
 
-            if (jumpCooldownClock > jumpCooldown)
+            if (progress >= 1 && (stateInfo.IsName("Stand To Roll") || stateInfo.IsName("Jump Walking") || stateInfo.IsName("Jump Running") || stateInfo.IsName("Jumping")))
             {
                 npcInput.jump = false;
-
                 stateMachine.GetCurrentState().Exit(this);
-                stateMachine.SetCurrentNPCState(idle);
+
+                INPCState nextState = idle;
+                if (npcInput.sprint && npcInput.move != Vector2.zero)
+                    nextState = running;
+                else if (!npcInput.sprint && npcInput.move != Vector2.zero)
+                    nextState = walking;
+
+                stateMachine.SetCurrentNPCState(nextState);
                 stateMachine.GetCurrentState().Enter(this);
-                jumpCooldownClock = 0;
                 _energyRecoveryTimer = 0f;
             }
         }
 
-        if (rolling)
+        if (GetIsRolling())
         {
-            if (rollLock)
-            {
-                rollCooldownClock += Time.fixedDeltaTime;
-            }
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            float progress = stateInfo.normalizedTime;
 
-            if (rollCooldownClock > rollCooldown)
+            if (progress >= 1 && (stateInfo.IsName("Stand To Roll") || stateInfo.IsName("Jumping") || stateInfo.IsName("Jump Running") || stateInfo.IsName("Jump Walking")))
             {
-                if (npcInput == null)
-                {
-                    stateMachine.GetCurrentState().FixedUpdate(this);
-                    return;
-                }
-
                 npcInput.roll = false;
-                rolling = false;
                 stateMachine.GetCurrentState().Exit(this);
-                stateMachine.SetCurrentNPCState(idle);
+
+                INPCState nextState = idle;
+                if (npcInput.sprint && npcInput.move != Vector2.zero)
+                    nextState = running;
+                else if (!npcInput.sprint && npcInput.move != Vector2.zero)
+                    nextState = walking;
+
+                stateMachine.SetCurrentNPCState(nextState);
                 stateMachine.GetCurrentState().Enter(this);
-                rollLock = false;
-                rollCooldownClock = 0;
                 _energyRecoveryTimer = 0f;
             }
         }
@@ -390,19 +328,9 @@ public class NPCCore : MonoBehaviour
             stateMachine.GetCurrentState().Enter(this);
         }
 
-        DrainPlayerOxygen(npcOxygen - (npcData.oxygenPassiveDrainRate * Time.deltaTime));
-
-        if (refillingOxygen && npcInput != null && !npcInput.oxygen)
-        {
-            refillingOxygen = false;
-            stateMachine.GetCurrentState().Exit(this);
-            stateMachine.SetCurrentNPCState(idle);
-            stateMachine.GetCurrentState().Enter(this);
-        }
-
         if (stateMachine.currentState == running && npcInput.sprint)
         {
-            if (npcInput.move != Vector2.zero && !rolling && !GetIsJumping())
+            if (npcInput.move != Vector2.zero && !GetIsRolling() && !GetIsJumping())
             {
                 _energyRecoveryTimer = 0f;
             }

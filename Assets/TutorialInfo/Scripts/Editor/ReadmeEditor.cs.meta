@@ -10,8 +10,6 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-<<<<<<< HEAD
-=======
 AssetOrigin:
   serializedVersion: 1
   productId: 213197
@@ -19,4 +17,3 @@ AssetOrigin:
   packageVersion: 1.0.3
   assetPath: Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs
   uploadId: 727820
->>>>>>> skylar-branch

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: db8e2237cac7322419ae98ef4f27813a
+timeCreated: 1519906679
+licenseType: Store
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/PBR_Drone/Description_Dron.txt
+  uploadId: 354699

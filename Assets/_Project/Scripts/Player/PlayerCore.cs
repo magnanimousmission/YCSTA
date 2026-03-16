@@ -53,6 +53,10 @@ public class PlayerCore : MonoBehaviour
     private PhotonView ownerPhotonView;
     bool initialized = false;
 
+    internal void DecrementHealth(float damage)
+    {
+        playerHealth -= damage;
+    }
 
     internal PlayerStateMachine GetStateMachine()
     {

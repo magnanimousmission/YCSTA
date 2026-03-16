@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] float damage;
     List<GameObject> targets = new();
     GameObject targetToAttack;
     NavMeshAgent agent;
@@ -18,12 +19,13 @@ public class Enemy : MonoBehaviour
         agent.updateRotation = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
 
         if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("NPC") && !targets.Contains(other.gameObject))
         {
-            targets.Add(other.gameObject);
+            if(!other.gameObject.GetComponentInChildren<AuraController>().GetIsTethered())
+                targets.Add(other.gameObject);
         }
     }
 
@@ -74,6 +76,7 @@ public class Enemy : MonoBehaviour
             {
                 ResetAnimations();
                 animator.SetBool("attack", true);
+                targetToAttack.GetComponentInChildren<PlayerCore>().DecrementHealth(damage);
             }
             else
             {

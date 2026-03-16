@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 980386028432307306}
-  - component: {fileID: 6009885339935326132}
   m_Layer: 0
   m_Name: Officer01_Female
   m_TagString: Untagged
@@ -64,21 +63,6 @@ Transform:
   - {fileID: 4609734642179773735}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6009885339935326132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3422585410598377639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b9ab1a7c65adb54a8e1a1cbe01dbd9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCInputHandler
-  followStopDistance: 1.5
-  sprintDistance: 5
-  myCollider: {fileID: 0}
 --- !u!1 &4571979229957675885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,6 +1671,9 @@ GameObject:
   - component: {fileID: 1430382878445303018}
   - component: {fileID: 5534760700654001869}
   - component: {fileID: 1040479294141156919}
+  - component: {fileID: 1835747253839731082}
+  - component: {fileID: 4306456261652866340}
+  - component: {fileID: 2884322043688630660}
   m_Layer: 0
   m_Name: G01
   m_TagString: Untagged
@@ -1889,6 +1876,106 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1835747253839731082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609734642180262151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 4306456261652866340}
+  - {fileID: 2884322043688630660}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &4306456261652866340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609734642180262151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonTransformView
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &2884322043688630660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609734642180262151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonAnimatorView
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: walking
+  - Type: 4
+    SynchronizeType: 1
+    Name: running
+  - Type: 4
+    SynchronizeType: 1
+    Name: fallen
+  - Type: 4
+    SynchronizeType: 1
+    Name: dead
+  - Type: 4
+    SynchronizeType: 1
+    Name: WalkingStrafeLeft
+  - Type: 4
+    SynchronizeType: 1
+    Name: WalkingStrafeRight
+  - Type: 4
+    SynchronizeType: 1
+    Name: RunningStrafeLeft
+  - Type: 4
+    SynchronizeType: 1
+    Name: RunningStrafeRight
+  - Type: 4
+    SynchronizeType: 1
+    Name: Idle
+  - Type: 4
+    SynchronizeType: 1
+    Name: jump
+  - Type: 4
+    SynchronizeType: 1
+    Name: walkBack
+  - Type: 4
+    SynchronizeType: 1
+    Name: runningBack
+  - Type: 4
+    SynchronizeType: 1
+    Name: roll
+  - Type: 4
+    SynchronizeType: 1
+    Name: interacting
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &4609734642180262153
 GameObject:
   m_ObjectHideFlags: 0

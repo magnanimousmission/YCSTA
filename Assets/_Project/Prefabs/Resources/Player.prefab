@@ -708,46 +708,46 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: walking
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: running
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: fallen
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: dead
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: WalkingStrafeLeft
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: WalkingStrafeRight
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: RunningStrafeLeft
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: RunningStrafeRight
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Idle
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: jump
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: walkBack
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: runningBack
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: roll
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: interacting
   m_SynchronizeLayers:
   - SynchronizeType: 0

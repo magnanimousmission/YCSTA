@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c5b1f7b2c841141bb64c5f34f7884f, type: 3}
   m_Name: Objective 3
   m_EditorClassIdentifier: Assembly-CSharp::ObjectiveData
-  mainObjectiveText: Save All Civilians in the region before the bomb goes off
+  mainObjectiveText: 'Save All Civilians In The Region '
   subObjectives:
-  - displayText: Find more civilians and add them to you tether
+  - displayText: Find civilians and escort them to the extraction site
     id: 
   nextObjective: {fileID: 0}
-  mainDisplayDuration: 4
+  mainDisplayDuration: 6

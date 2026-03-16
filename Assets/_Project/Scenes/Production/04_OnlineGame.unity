@@ -94579,6 +94579,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjectiveManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4843852623589425781, guid: 953cc70fdda289d47b3cc65e47b19586, type: 3}
+      propertyPath: startingObjective
+      value: 
+      objectReference: {fileID: 11400000, guid: db791b0f3b238dc4489c07dac16deae1, type: 2}
     - target: {fileID: 7215202883719614823, guid: 953cc70fdda289d47b3cc65e47b19586, type: 3}
       propertyPath: m_LocalPosition.x
       value: 97.50756

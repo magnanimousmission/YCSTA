@@ -190939,6 +190939,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1707216605}
     - target: {fileID: 6187149400018785583, guid: 27e75df249119c740be1fa3b4dfcf7f0, type: 3}
+      propertyPath: travelDuration
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187149400018785583, guid: 27e75df249119c740be1fa3b4dfcf7f0, type: 3}
       propertyPath: splineContainer
       value: 
       objectReference: {fileID: 352632740}
@@ -192676,11 +192680,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 156629416817673166, guid: 1c4ef8c0072201f4486a9c599404566a, type: 3}
       propertyPath: timerDuration
-      value: 45
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 156629416817673166, guid: 1c4ef8c0072201f4486a9c599404566a, type: 3}
       propertyPath: extractingStartTime
-      value: 30
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 1314313220148051841, guid: 1c4ef8c0072201f4486a9c599404566a, type: 3}
       propertyPath: m_LocalPosition.x

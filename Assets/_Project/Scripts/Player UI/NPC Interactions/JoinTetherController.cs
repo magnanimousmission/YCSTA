@@ -86,8 +86,7 @@ public class JoinTetherController : BaseInteractable, IOnEventCallback
 
     private void ApplyInteraction(GameObject interactorSource)
     {
-        if (_hasInteracted)
-            return;
+
 
         if (interactorSource == null)
             return;

@@ -23,5 +23,5 @@ MonoBehaviour:
   energyRecoveryRate: 30
   energyRecoveryDelay: 2
   jumpingEnergyDrain: 7
-  oxygenPassiveDrainRate: 1
+  oxygenPassiveDrainRate: 0
   oxygenRecoveryRate: 5

@@ -72,7 +72,7 @@ public class ExtractionController : MonoBehaviour
         //delay for like 15 sec to let cutscene play then play this
         var x = _playerCore.GetComponent<PlayerDeathController>();
         x.DisablePlayerPresence();
-        ExtractionCutsceneCameraController._instance.Begin();
+        ExtractionCutsceneCameraController.Instance.Begin();
         
         yield return new WaitForSeconds(timeToWait);
         

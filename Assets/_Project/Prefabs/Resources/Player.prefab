@@ -2435,13 +2435,13 @@ MonoBehaviour:
   spectatorCameraPrefab: {fileID: 1489539176252534235, guid: d95c597c1346e0d47a2b8fef9efa6853, type: 3}
   auraController: {fileID: 7399661155816356044}
   playerVisuals:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2056154796227793055}
+  - {fileID: 3402974943791970283}
+  - {fileID: 4273745860817035990}
+  - {fileID: 7790862330068697446}
+  - {fileID: 705280753037892064}
+  - {fileID: 8274687283147173531}
+  - {fileID: 4236427114105006685}
   - {fileID: 8623062252385944392}
   playerCamera: {fileID: 8182609711060298051}
 --- !u!1 &5612651401814385096

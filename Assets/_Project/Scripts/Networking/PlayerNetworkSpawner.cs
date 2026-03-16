@@ -15,7 +15,7 @@ public class PlayerNetworkSpawner : MonoBehaviourPunCallbacks
     [Header("Intro Gate")]
     [SerializeField] private bool waitForIntro = true;
     [SerializeField] private CameraOrbitLerp introOrbit;
-
+    [SerializeField, Min(0f)] private float introDuration = 12f;
     [Header("UI")]
     [SerializeField] private GameObject[] uiGameObjects;
 
@@ -47,15 +47,7 @@ public class PlayerNetworkSpawner : MonoBehaviourPunCallbacks
         if (waitForIntro)
         {
             LoadingScreen.Hide();
-
-            if (introOrbit == null)
-                introOrbit = FindObjectOfType<CameraOrbitLerp>();
-
-            if (introOrbit != null && introOrbit.UsesTimedStop)
-            {
-                while (!introOrbit.HasStopped)
-                    yield return null;
-            }
+            yield return new WaitForSeconds(introDuration);
         }
 
         var localPlayerReady = TrySpawnLocalPlayer();

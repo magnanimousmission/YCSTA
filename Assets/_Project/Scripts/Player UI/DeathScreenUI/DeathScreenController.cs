@@ -11,7 +11,7 @@ public class DeathScreenController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject deathPanel;
     [SerializeField] private string mainMenuSceneName = "01_Lobby";
     [SerializeField] private GameObject spectateButton;
-    
+    [SerializeField] private AudioClip deathVoiceSound;
     private PlayerCore _playerCore;
     private AuraDeathTimer _auraDeathTimer;
     private PlayerDeathController _playerDeathController;
@@ -22,9 +22,11 @@ public class DeathScreenController : MonoBehaviourPunCallbacks
 
     [HideInInspector] public bool deathPanelActive = false;
     
+    private AudioSource _audioSource;
     private void Awake()
     {
         deathPanel.SetActive(false);
+        _audioSource =  GetComponent<AudioSource>();
     }
 
     public void Bind(AuraDeathTimer timer)
@@ -60,6 +62,7 @@ public class DeathScreenController : MonoBehaviourPunCallbacks
         deathPanel.SetActive(true);
         UnlockCursor();
         
+        _audioSource.PlayOneShot(deathVoiceSound);
         _playerDeathController = _playerCore.GetComponent<PlayerDeathController>();
         _playerDeathController?.BroadcastDisablePlayerPresence();
         

@@ -16,7 +16,7 @@ public class ExtractionUIController : MonoBehaviourPunCallbacks
     [SerializeField] private CanvasGroup extractionPanel;
     [SerializeField] private CanvasGroup extractionDetailPanel;
     [SerializeField] private CanvasGroup quitButtonPanel;
-
+    [SerializeField] private AudioClip deathVoiceSound;
     [Header("Fade Settings")]
     [SerializeField] private float fadeInDuration = 0.8f;
     [SerializeField] private float delayBetweenPanels = 0.4f;
@@ -26,17 +26,18 @@ public class ExtractionUIController : MonoBehaviourPunCallbacks
     
     private CursorLockMode _previousLockMode;
     private bool _previousCursorVisible;
-    
+    private AudioSource _audioSource;
     private void Awake()
     {
         deathPanel.SetActive(false);
+        _audioSource =  GetComponent<AudioSource>();
     }
 
     public void ActivateExtractionUI()
     {
         deathPanel.SetActive(true);
         UnlockCursor();
-
+        _audioSource.PlayOneShot(deathVoiceSound);
         SetAlpha(extractionPanel, 0f);
         SetAlpha(extractionDetailPanel, 0f);
         SetAlpha(quitButtonPanel, 0f);

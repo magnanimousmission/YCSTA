@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2300992772910496809}
   - component: {fileID: 5784887113590220052}
   - component: {fileID: 8567334563139535077}
-  - component: {fileID: 3126204904187620785}
   - component: {fileID: 6187149400018785583}
   m_Layer: 0
   m_Name: ExitCamera
@@ -29,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7398468009471124524}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.02049644, y: 0.71323276, z: -0.038355276, w: 0.699577}
+  m_LocalRotation: {x: -0.02049547, y: 0.71323514, z: -0.03835586, w: 0.6995745}
   m_LocalPosition: {x: -25.92, y: 20.35, z: 5.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0.872, y: 83.917, z: 10.142}
+  m_LocalEulerAnglesHint: {x: 1.492, y: 91.046, z: -4.757}
 --- !u!20 &2300992772910496809
 Camera:
   m_ObjectHideFlags: 0
@@ -139,29 +138,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &3126204904187620785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7398468009471124524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29a074d529cf945029ef7cf40540c9df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineAnimate
-  m_Target: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_LoopMode: 1
-  m_Method: 0
-  m_Duration: 12
-  m_MaxSpeed: 3.8319063
-  m_EasingMode: 0
-  m_AlignmentMode: 1
-  m_ObjectForwardAxis: 0
-  m_ObjectUpAxis: 1
-  m_StartOffset: 0
 --- !u!114 &6187149400018785583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b3ae48ccef18b44a52c3222ee8a64a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  spline: {fileID: 0}
-  speed: 0.1
-  _camera: {fileID: 2300992772910496809}
+  splineContainer: {fileID: 0}
+  travelDuration: 8
+  snapToSplineOnStart: 0
+  lookTarget: {fileID: 0}
+  lookTargetOffset: {x: 0, y: 0, z: 0}
+  positionLerpSpeed: 6
+  rotationLerpSpeed: 8
+  keepLookingAtTargetAfterFinish: 1

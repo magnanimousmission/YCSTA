@@ -92,7 +92,7 @@ public class ExtractionStartingController : MonoBehaviour
         yield return StartCoroutine(SpinUp());
 
         _audioSource.clip = helicopterLoopClip;
-        _audioSource.loop = true;
+        _audioSource.loop = false;
         _audioSource.Play();
 
         splineAnimate.Container = extractingSpline;

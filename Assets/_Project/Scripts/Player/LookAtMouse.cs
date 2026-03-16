@@ -9,8 +9,8 @@ public class LookAtMouse : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [Header("Rotation Feel")]
     [SerializeField, Range(0f, 40f)] private float deadZonePercent = 8f;
-    [SerializeField, Range(30f, 180f)] private float minTurnSpeed = 80f;
-    [SerializeField, Range(180f, 1080f)] private float maxTurnSpeed = 480f;
+    [SerializeField, Range(5f, 50f)] private float minTurnSpeed = 15f;
+    [SerializeField, Range(50f, 100f)] private float maxTurnSpeed = 60f;
     [SerializeField, Range(0.5f, 3f)] private float rampPower = 1.4f;
     private Rigidbody _rb;
     private Animator _animator;

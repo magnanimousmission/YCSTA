@@ -2272,7 +2272,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4466422893203568345}
-  - component: {fileID: 1363296883607363618}
   m_Layer: 0
   m_Name: Civilian01_Female
   m_TagString: Untagged
@@ -2296,21 +2295,6 @@ Transform:
   - {fileID: 1816577398276932471}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 89.784, z: 0}
---- !u!114 &1363296883607363618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5209140726387454719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b9ab1a7c65adb54a8e1a1cbe01dbd9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCInputHandler
-  followStopDistance: 1.5
-  sprintDistance: 5
-  myCollider: {fileID: 0}
 --- !u!1 &5409230938536549807
 GameObject:
   m_ObjectHideFlags: 0

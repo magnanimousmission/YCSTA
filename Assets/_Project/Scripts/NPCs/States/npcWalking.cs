@@ -58,7 +58,7 @@ namespace Assets.Scripts.NPCs
                 return;
             }
 
-            if (agent != null)
+            if (agent != null && agent.isOnNavMesh)
                 agent.SetDestination(target.transform.position);
 
             Vector3 direction = (target.transform.position - npc.transform.position);

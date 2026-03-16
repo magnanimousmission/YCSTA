@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class BaseInteractable : MonoBehaviour, IInteractable
@@ -11,13 +12,22 @@ public abstract class BaseInteractable : MonoBehaviour, IInteractable
     
     [HideInInspector]
     public bool _hasInteracted = false;
-    
+
+    private void Awake()
+    {
+        interactUI.SetActive(true);
+    }
+
     protected virtual void Update()
     {
-        if (_hasInteracted) return;
-        
-        if (interactUI != null)
-            interactUI.SetActive(IsLookingAt);
+        if (_hasInteracted)
+        {
+            interactUI.SetActive(false);
+        }
+        else
+        {
+            interactUI.SetActive(true);
+        }
     }
 
     public virtual void RotateUI(Transform playerTransform)

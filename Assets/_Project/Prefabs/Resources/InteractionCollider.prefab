@@ -223,7 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798844953881083155}
   - component: {fileID: 3103908613226365064}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: InteractableUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 3591940233780504211}
   - component: {fileID: 3430742336961866931}
   - component: {fileID: 2130864881058557089}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: InteractionCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JoinTetherController
   interactUI: {fileID: 0}
   interactUICanvas: {fileID: 0}
+  _hasInteracted: 0
   ownerAuraController: {fileID: 0}
+  npcInputHandler: {fileID: 0}
 --- !u!1 &7153491312619779774
 GameObject:
   m_ObjectHideFlags: 0

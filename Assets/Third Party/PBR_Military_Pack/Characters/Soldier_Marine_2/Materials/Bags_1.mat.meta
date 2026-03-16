@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 58fd9384f52230f438a423c237d94461
+timeCreated: 1578482286
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/Soldier_Marine_2/Materials/Bags_1.mat
+  uploadId: 354699

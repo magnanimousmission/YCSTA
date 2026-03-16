@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - AuraObject
+  - Terrain
   - TetherAnchor
   layers:
   - Default
@@ -14,7 +15,7 @@ TagManager:
   - Water
   - UI
   - IgnorePlayer
-  - 
+  - Interaction
   - 
   - 
   - 

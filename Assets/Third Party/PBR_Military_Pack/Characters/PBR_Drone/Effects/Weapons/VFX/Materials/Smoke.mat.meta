@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0c29e3723eefafb4aa99bdef56c3d0a6
+timeCreated: 1495637910
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/PBR_Drone/Effects/Weapons/VFX/Materials/Smoke.mat
+  uploadId: 354699

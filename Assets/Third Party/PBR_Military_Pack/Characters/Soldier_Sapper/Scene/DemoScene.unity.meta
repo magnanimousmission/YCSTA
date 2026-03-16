@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 824c73e1d87fcf54d908122270037396
+timeCreated: 1580220640
+licenseType: Store
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/Soldier_Sapper/Scene/DemoScene.unity
+  uploadId: 354699

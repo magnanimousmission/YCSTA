@@ -12,6 +12,8 @@ public class PlayerCore : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerInputHandler input;
+    internal PlayerInputEventArgs playerInput;
+
     [SerializeField] private float playerHealth;
     [SerializeField] private float playerEnergy;
     [SerializeField] private float playerOxygen;
@@ -19,22 +21,8 @@ public class PlayerCore : MonoBehaviour
     public float walkingSoundInterval = 0.45f;
     public float runningSoundInterval = 0.3f;
 
-    internal void SetJumpCooldown(float duration)
-    {
-        jumpCooldown = duration;
-    }
-
-    internal PlayerInputEventArgs playerInput;
 
     internal playerIdle idle = new();
-
-    internal bool GetIsJumping()
-    {
-        if(GetStateMachine().currentState == jump)
-            return true;
-        else return false;
-    }
-
     playerWalking walking = new();
     playerRunning running = new();
     playerFallen fallen = new();
@@ -48,7 +36,7 @@ public class PlayerCore : MonoBehaviour
     private float _energyRecoveryTimer = 0f;
 
     playerDead dead = new();
-    playerConsuming oxygen = new();
+    internal playerInteracting interacting = new();
     internal playerJumping jump = new();
 
     bool refillingOxygen = false;
@@ -56,18 +44,10 @@ public class PlayerCore : MonoBehaviour
     float jumpCooldown = 2;
     float jumpCooldownClock = 0;
 
-    private bool rolling = false;
-    private bool rollLock = false;
     float rollCooldown = 3;
     float rollCooldownClock = 0;
     private bool _oxygenDepletedNotified;
     private float _footstepTimer;
-
-
-    internal void SetIsLocal(bool v)
-    {
-        isLocalPlayer = true;
-    }
 
     private PlayerStateMachine stateMachine;
     private PhotonView ownerPhotonView;
@@ -118,6 +98,7 @@ public class PlayerCore : MonoBehaviour
         playerHealth = playerData.health;
         playerEnergy = playerData.energy;
         playerOxygen = playerData.oxygen;
+        playerInput = new();
         input.playerInput += PlayerInputHandler_playerInput;
         Cursor.visible = false;
         _footstepTimer = 0f;
@@ -149,16 +130,38 @@ public class PlayerCore : MonoBehaviour
         return playerData;
     }
 
+    internal void InteractWithObject(GameObject interactableObj)
+    {
+        if(stateMachine == null)
+            initialize();
+
+        if (stateMachine.currentState != interacting)
+        {
+            stateMachine.currentState.Exit(this);
+            stateMachine.SetCurrentPlayerState(interacting);
+            interacting._lastInteractable = interactableObj;
+            stateMachine.GetCurrentState().Enter(this);
+        }
+
+
+
+    }
+
     private void PlayerInputHandler_playerInput(object sender, PlayerInputEventArgs playerInput)
     {
-
+        if (stateMachine.GetCurrentState() == fallen ||
+            stateMachine.GetCurrentState() == dead ||
+            stateMachine.GetCurrentState() == interacting ||
+            GetIsJumping() ||
+            GetIsRolling())  // ? add this
+            return;
         EvaluateInput(playerInput);
 
     }
 
     internal void EvaluateInput(PlayerInputEventArgs playerInput )
     {
-        if (playerInput == null || stateMachine.GetCurrentState() == fallen || stateMachine.GetCurrentState() == dead || stateMachine.GetCurrentState() == oxygen || GetIsJumping())
+        if (stateMachine.GetCurrentState() == fallen || stateMachine.GetCurrentState() == dead || stateMachine.GetCurrentState() == interacting)
             return;
 
         //Debug.Log("Evaluating");
@@ -177,108 +180,47 @@ public class PlayerCore : MonoBehaviour
             playerInput.jump = false;
         }
 
-        if (playerInput.roll && !rollLock && playerEnergy > 0)
+        if (playerInput.roll && !GetIsRolling() && playerEnergy > 0)
         {
             if (stateMachine.currentState != roll)
                 stateMachine.currentState.Exit(this);
 
-            rollLock = true;
-            rolling = true;
+
             stateMachine.SetCurrentPlayerState(roll);
             stateMachine.GetCurrentState().Enter(this);
 
         }
-
-        if (playerInput.oxygen) {
-            if (stateMachine.currentState != oxygen)
-                stateMachine.currentState.Exit(this);
-
-            refillingOxygen = true;
-            stateMachine.SetCurrentPlayerState(oxygen);
-            stateMachine.GetCurrentState().Enter(this);
- 
+        else if (playerInput.roll)
+        {
+            playerInput.roll = false;
         }
+
 
         if (playerInput.move != Vector2.zero && !playerInput.sprint)
         {
-
             this.playerInput = playerInput;
 
-
-            if(stateMachine.currentState != walking)
+            if (!GetIsRolling() && !GetIsJumping()) // ? add guards
             {
-                stateMachine.currentState.Exit(this);
+                if(stateMachine.currentState != walking)
+                    stateMachine.currentState.Exit(this);
+
                 stateMachine.SetCurrentPlayerState(walking);
                 stateMachine.GetCurrentState().Enter(this);
-
-                if (playerInput.jump && playerEnergy > playerData.jumpingEnergyDrain)
-                {
-                    if (stateMachine.currentState != jump)
-                        stateMachine.currentState.Exit(this);
-
-                        stateMachine.SetCurrentPlayerState(jump);
-                        stateMachine.GetCurrentState().Enter(this);
-
-                }
-                else if(playerInput.jump && playerEnergy < playerData.jumpingEnergyDrain)
-                {
-                    playerInput.jump = false;
-                }
-
-                if (playerInput.roll)
-                {
-                    if (stateMachine.currentState != roll)
-                        stateMachine.currentState.Exit(this);
-
-                    rollLock = true;
-                    rolling = true;
-                    stateMachine.SetCurrentPlayerState(roll);
-                    stateMachine.GetCurrentState().Enter(this);
-                }
             }
-
-
         }
-        else if (playerInput.move != Vector2.zero && playerInput.sprint && playerEnergy > 0)
+        if (playerInput.move != Vector2.zero && playerInput.sprint && playerEnergy > 0)
         {
-
             this.playerInput = playerInput;
 
-            if (stateMachine.currentState != running)
+            if (!GetIsRolling() && !GetIsJumping()) // ? add guards
             {
-                stateMachine.currentState.Exit(this);
+                if(stateMachine.currentState != running)
+                    stateMachine.currentState.Exit(this);
+                
                 stateMachine.SetCurrentPlayerState(running);
                 stateMachine.GetCurrentState().Enter(this);
-
-                if (playerInput.jump && playerEnergy > playerData.jumpingEnergyDrain)
-                {
-                    if (stateMachine.currentState != jump)
-                        stateMachine.currentState.Exit(this);
-
-                        stateMachine.SetCurrentPlayerState(jump);
-                        stateMachine.GetCurrentState().Enter(this);
-
-                }
-                else if (playerInput.jump && playerEnergy < playerData.jumpingEnergyDrain)
-                {
-                    playerInput.jump = false;
-                }
-
-                if (playerInput.roll)
-                {
-                    if (stateMachine.currentState != roll)
-                        stateMachine.currentState.Exit(this);
-
-                    rollLock = true;
-                    rolling = true;
-                    stateMachine.SetCurrentPlayerState(roll);
-                    stateMachine.GetCurrentState().Enter(this);
-                }
-
-
             }
-
-
         }
     }
 
@@ -323,7 +265,7 @@ public class PlayerCore : MonoBehaviour
     internal void DrainPlayerOxygen(float value)
     {
         playerOxygen = Mathf.Clamp(value, 0, playerData.oxygen);
-        OnOxygenChanged?.Invoke(playerOxygen, playerData.oxygen);
+        //OnOxygenChanged?.Invoke(playerOxygen, playerData.oxygen);
     }
 
     internal void RefillingPlayerOxygen(float value)
@@ -341,55 +283,69 @@ public class PlayerCore : MonoBehaviour
     
     void Update()
     {
-        if (playerOxygen <= 0 && !_oxygenDepletedNotified)
-        {
-            _oxygenDepletedNotified = true;
-            OnOxygenDepleted?.Invoke();
-        }
+       // Debug.Log(stateMachine.GetCurrentState());
+        //if (playerOxygen <= 0 && !_oxygenDepletedNotified)
+        //{
+            //_oxygenDepletedNotified = true;
+            //OnOxygenDepleted?.Invoke();
+        //}
 
-        if (playerOxygen > 0)
-            _oxygenDepletedNotified = false;
-        //Debug.Log(GetStateMachine().GetCurrentState());
+        //if (playerOxygen > 0)
+            //_oxygenDepletedNotified = false;
 
 
         if (GetIsJumping())
         {
-            jumpCooldownClock += Time.fixedDeltaTime;
 
-            if (jumpCooldownClock > jumpCooldown)
+            // Get info for the state currently playing on Layer 0
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+            float progress = stateInfo.normalizedTime;
+            //Debug.Log(duration);
+
+
+            if (progress >= 1 && (stateInfo.IsName("Stand To Roll") || stateInfo.IsName("Jump Walking") || stateInfo.IsName("Jump Running") || stateInfo.IsName("Jumping")))
             {
-                //Debug.Log("Cooldown reached");
 
                 playerInput.jump = false;
 
                 stateMachine.GetCurrentState().Exit(this);
-                stateMachine.SetCurrentPlayerState(idle);
+
+                IPlayerState nextState = idle;
+                if (playerInput.sprint && playerInput.move != Vector2.zero)
+                    nextState = running;
+                else if (!playerInput.sprint && playerInput.move != Vector2.zero)
+                    nextState = walking;
+
+                stateMachine.SetCurrentPlayerState(nextState);
                 stateMachine.GetCurrentState().Enter(this);
-                jumpCooldownClock = 0;
                 _energyRecoveryTimer = 0f;
             }
 
         }
 
-        if (rolling)
+        if (GetIsRolling())
         {
-            if (rollLock)
-            {
-                rollCooldownClock += Time.fixedDeltaTime;
+            // Get info for the state currently playing on Layer 0
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-            }
+            float progress = stateInfo.normalizedTime;
 
-            if (rollCooldownClock > rollCooldown)
+            //Debug.Log(progress);
+
+            if (progress >= 1 && (stateInfo.IsName("Stand To Roll") || stateInfo.IsName("Jumping") || stateInfo.IsName("Jump Running") || stateInfo.IsName("Jump Walking")))
             {
-                if (playerInput == null)
-                    return;
-                playerInput.roll = false;
-                rolling = false;
                 stateMachine.GetCurrentState().Exit(this);
-                stateMachine.SetCurrentPlayerState(idle);
+
+                IPlayerState nextState = idle;
+                if(playerInput.sprint)
+                    nextState = running;
+                else if (!playerInput.sprint && playerInput.move != Vector2.zero)
+                    nextState = walking;
+
+
+                stateMachine.SetCurrentPlayerState(nextState);
                 stateMachine.GetCurrentState().Enter(this);
-                rollLock = false;
-                rollCooldownClock = 0;
                 _energyRecoveryTimer = 0f;
             }
         }
@@ -419,19 +375,19 @@ public class PlayerCore : MonoBehaviour
                 stateMachine.GetCurrentState().Enter(this);
             }
             
-            DrainPlayerOxygen(playerOxygen - (playerData.oxygenPassiveDrainRate * Time.deltaTime));
+            //DrainPlayerOxygen(playerOxygen - (playerData.oxygenPassiveDrainRate * Time.deltaTime));
             
-            if (refillingOxygen && !playerInput.oxygen)
-            {
-                refillingOxygen = false;
-                stateMachine.GetCurrentState().Exit(this);
-                stateMachine.SetCurrentPlayerState(idle);
-                stateMachine.GetCurrentState().Enter(this);
-            }
+            //if (refillingOxygen && !playerInput.interact)
+            //{
+                //refillingOxygen = false;
+                //stateMachine.GetCurrentState().Exit(this);
+                //stateMachine.SetCurrentPlayerState(idle);
+                //stateMachine.GetCurrentState().Enter(this);
+            //}
 
             if (stateMachine.currentState == running && playerInput.sprint)
             {
-                if (playerInput.move != Vector2.zero && !rolling && !GetIsJumping())
+                if (playerInput.move != Vector2.zero && !GetIsRolling() && !GetIsJumping())
                 {
                     _energyRecoveryTimer = 0f;
                 }
@@ -459,17 +415,45 @@ public class PlayerCore : MonoBehaviour
         
     }
 
+
+    internal bool GetIsJumping()
+    {
+        if (GetStateMachine().currentState == jump)
+            return true;
+        else return false;
+    }
+
+    internal void SetJumpCooldown(float duration)
+    {
+        jumpCooldown = duration;
+    }
+
+    internal void SetRollingCooldown(float duration)
+    {
+        rollCooldown = duration;
+    }
+
+    internal bool GetIsRolling()
+    {
+        if (stateMachine.GetCurrentState() == roll)
+            return true;
+        else
+            return false;
+
+    }
     private void HandleFootstepAudio()
     {
         if (!isLocalPlayer || AudioManager.Instance == null)
             return;
 
+    
+    
         Vector2 moveInput = input != null ? input.MoveDirection : Vector2.zero;
         bool hasInput = moveInput.sqrMagnitude > 0.0001f;
         bool isRunningByInput = playerInput != null && playerInput.sprint && playerEnergy > 0f;
-        bool blockedByState = stateMachine != null && (stateMachine.currentState == dead || stateMachine.currentState == fallen || stateMachine.currentState == oxygen);
+        bool blockedByState = stateMachine != null && (stateMachine.currentState == dead || stateMachine.currentState == fallen);
 
-        if (!hasInput || rolling || GetIsJumping() || blockedByState)
+        if (!hasInput || GetIsRolling() || GetIsJumping() || blockedByState)
         {
             _footstepTimer = 0f;
             return;

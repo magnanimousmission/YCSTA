@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -5,6 +6,8 @@ public class ExtractionController : MonoBehaviour
 {
     [Header("Config")] 
     [SerializeField] private string extractableTag = "Player";
+    [SerializeField] private float timeToWait;
+    
     private readonly HashSet<PlayerCore> _playersInZone = new();
     private bool _extractionTriggered = false;
     
@@ -17,12 +20,12 @@ public class ExtractionController : MonoBehaviour
 
     private void OnEnable()
     {
-        TimerController.OnTimerFinished += HandleTimerFinished;
+        TimerController.OnTimerFinished += TimerDone;
     }
 
     private void OnDisable()
     {
-        TimerController.OnTimerFinished -= HandleTimerFinished;
+        TimerController.OnTimerFinished -= TimerDone;
     }
     
     public void Bind(PlayerCore playerCore)
@@ -54,13 +57,25 @@ public class ExtractionController : MonoBehaviour
         Debug.Log($"[Extraction] {player.name} left zone. ({_playersInZone.Count} inside)");
     }
 
-    private void HandleTimerFinished()
+    private void TimerDone()
     {
-        if (_extractionTriggered) return;
+        StartCoroutine(HandleTimerFinished());
+    }
+    
+    private IEnumerator HandleTimerFinished()
+    {
+        if (_extractionTriggered) yield return null;
         _extractionTriggered = true;
 
-        if (_playerCore == null) return;
-
+        if (_playerCore == null) yield return null;
+        
+        //delay for like 15 sec to let cutscene play then play this
+        var x = _playerCore.GetComponent<PlayerDeathController>();
+        x.DisablePlayerPresence();
+        ExtractionCutsceneCameraController._instance.Begin();
+        
+        yield return new WaitForSeconds(timeToWait);
+        
         if (_playersInZone.Contains(_playerCore))
         {
             Debug.Log($"[Extraction] {_playerCore.name} extracted successfully.");

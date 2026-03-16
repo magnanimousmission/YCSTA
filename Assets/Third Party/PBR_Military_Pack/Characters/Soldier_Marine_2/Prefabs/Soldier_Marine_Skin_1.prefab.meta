@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: e4771da08a45bc0488bde8d4943a4099
+timeCreated: 1578484613
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/Soldier_Marine_2/Prefabs/Soldier_Marine_Skin_1.prefab
+  uploadId: 354699

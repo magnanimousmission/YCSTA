@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 34397f9cc3c69cd4ba1e1abf7e1ccbbb
+timeCreated: 1520339094
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 118245
+  packageName: PBR Military (pack)
+  packageVersion: 1.4
+  assetPath: Assets/Third Party/PBR_Military_Pack/Characters/PBR_Soldier/Prefabs/Body1.prefab
+  uploadId: 354699
